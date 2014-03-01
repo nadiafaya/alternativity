@@ -96,5 +96,24 @@ var inscription = (function() {
         }
     };
 
+    inscription.storageKey = "_alternativity";
+
+    inscription.persist = function() {
+        localStorage.setItem(this.storageKey, JSON.stringify(this.subjects));
+    };
+
+    inscription.loadFromStorage = function() {
+        this.subjects = this.fromStorage();
+    };
+
+    inscription.isPersisted = function() {
+        return !!this.fromStorage();
+    };
+    
+    inscription.fromStorage = function() {
+        return JSON.parse(localStorage.getItem(this.storageKey));
+    };
+
+
     return inscription;
 })();

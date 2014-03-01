@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		inscription.subjects.push(newSubject);
 		inscription.generateAlternatives();
 		foundAlternativesController.generateDOM();
+		inscription.persist();
 	});
 
 	// Filter turns
@@ -79,12 +80,12 @@ document.addEventListener("DOMContentLoaded", function(){
 	Array.prototype.forEach.call(dayCheckboxes, function(dayCheckbox) {
 		dayCheckbox.addEventListener('change', function() {
 			var days = {
-				Lu: document.querySelector('.alternatives .filters.days input#Lu').checked,
-				Ma: document.querySelector('.alternatives .filters.days input#Ma').checked,
-				Mi: document.querySelector('.alternatives .filters.days input#Mi').checked,
-				Ju: document.querySelector('.alternatives .filters.days input#Ju').checked,
-				Vi: document.querySelector('.alternatives .filters.days input#Vi').checked,
-				Sa: document.querySelector('.alternatives .filters.days input#Sa').checked
+				Lu: document.getElementById('Lu').checked,
+				Ma: document.getElementById('Ma').checked,
+				Mi: document.getElementById('Mi').checked,
+				Ju: document.getElementById('Ju').checked,
+				Vi: document.getElementById('Vi').checked,
+				Sa: document.getElementById('Sa').checked
 			};
 
 			inscription.availableDays = days;
@@ -98,4 +99,14 @@ document.addEventListener("DOMContentLoaded", function(){
 	filterDaysAndTurnsButton.addEventListener('click', function() {
 		// Mostrar filtro de días y turnos
 	});
+
+	// Load the subjects stored on local storage
+	if(inscription.isPersisted()) {
+		inscription.loadFromStorage();
+		inscription.subjects.forEach(function(subject) {
+			foundSubjectsController.addSubject(subject);
+		});
+		inscription.generateAlternatives();
+		foundAlternativesController.generateDOM();			
+	}
 });

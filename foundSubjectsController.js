@@ -146,6 +146,7 @@ var SubjectListItem = function(foundSubject) {
 		var subjectIndex = inscription.subjects.indexOf(foundSubject.subject);
 		inscription.subjects.splice(subjectIndex, 1);
 		inscription.generateAlternatives();
+		inscription.persist();
 	};
 
 	var removeSubjectFromFoundSubjects = function() {
