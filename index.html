@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Alternativity</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/styles.css"></link>
+</head>
+<body class="container">
+	<h1>
+        Alternativity
+        <span class="small">Bienvenido a Alternativity! El objetivo de esta paginola es ayudarte a visualizar las alternativas de horarios de la preinscripci&oacute;n.</span>
+    </h1>
+    
+	<div id="instructions" class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                &iquest;C&oacute;mo usarlo?
+                <span data-target="#instructions .panel-body" class="closePanel chevron chevron-up pull-right"></span>
+            </h4>
+        </div>
+        <div class="panel-body closablePanel">
+            <p>Por cada materia:</p>
+            <ul>
+                <li>Agregar el nombre en el campo <a href="#subjectName">"Nombre de materia"</a></li>
+                <li>Copiar la lista de horarios que te muestra el SIGA en la secci&oacute;n de preinscripci&oacute;n para esa materia, en el campo <a href="#subjectSchedules">"Horarios de materia"</a>. 
+                    <br>
+                Ej: 
+                <br>&emsp;K4011	Lu(m)1:5 Ju(m)1:5
+                <br>&emsp;K4051	Lu(n)1:5 Mi(n)1:5
+                <br>&emsp;K4052	Ma(n)1:5 Ju(n)1:5
+                <br>&emsp;K4052	Vi(n)1:5 S&aacute;(t)1:5</li>
+                <li>Presionar el bot&oacute;n "Agregar materia"</li>
+            </ul>
+            <p>Al finalizar con todas tus materias podr&aacute;s visualizar la lista de posibles alternativas en la secci&oacute;n "Alternativas encontradas".</p>
+        </div>
+	</div>
+	<div id="addSubjectForm" class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Agregar materia
+                <span data-target="#addSubjectForm .panel-body" class="closePanel chevron chevron-up pull-right"></span>
+            </h4>
+        </div>
+        <div class="panel-body closablePanel form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="subjectName">Nombre de materia:</label>
+                <input class="form-control" type="text" id="subjectName" placeholder="An&aacute;lisis Matem&aacute;tico I">
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="subjectSchedules">Horarios de materia:<span class="clarification">(colocar cada horario en una nueva línea)</span></label>
+                <textarea class="form-control" name="subjectSchedules" id="subjectSchedules" cols="100" rows="10" placeholder="K4011	Lu(m)1:5 Ju(m)1:5                                                                                                                                                                                                                                                            
+        K4051	Lu(n)1:5 Mi(n)1:5                                                                                                                                                                                                                                                            
+        K4052	Ma(n)1:5 Ju(n)1:5                                                                                                                                                                                                                                                            
+        K4052	Vi(n)1:5 S&aacute;(t)1:5"></textarea>
+            </div>
+            <button class="btn btn-default pull-right" type="button" id="addSubject">Agregar materia</button>
+        </div>
+	</div>
+	<div class="subjects">
+        <h2>Materias encontradas</h2>
+		<div class="subjectList">
+			<div class="list-group">
+            </div>
+		</div>
+		<div class="subjectView">
+			<table class="viewSchedule table table-bordered dummy">
+                <thead>
+                    <tr>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Mi&eacute;rcoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>S&aacute;bado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="subjectSchedulesView">
+                        <td class="Lu"></td>
+                        <td class="Ma"></td>
+                        <td class="Mi"></td>
+                        <td class="Ju"></td>
+                        <td class="Vi"></td>
+                        <td class="Sa"></td>
+                    </tr>
+                </tbody>
+			</table>
+		</div>
+	</div>
+	<div class="alternatives">
+        <h2>Alternativas encontradas</h2>
+		<div class="alternativesSubjects">
+            <h3>Materias:</h3>
+			<ul class="list-group">
+			</ul>
+		</div>
+		<div class="alternativesViewing">
+            <h3>Alternativas:</h3>
+            <div class="filters days">
+                <span>Filtrar días:</span>
+                <label for="Lu">Lunes</label>
+                <input type="checkbox" id="Lu" checked="checked" />
+                <label for="Ma">Martes</label>
+                <input type="checkbox" id="Ma" checked="checked" />
+                <label for="Mi">Mi&eacute;rcoles</label>
+                <input type="checkbox" id="Mi" checked="checked" />
+                <label for="Ju">Jueves</label>
+                <input type="checkbox" id="Ju" checked="checked" />
+                <label for="Vi">Viernes</label>
+                <input type="checkbox" id="Vi" checked="checked" />
+                <label for="Sa">S&aacute;bado</label>
+                <input type="checkbox" id="Sa" checked="checked" />
+            </div>
+            <div class="filters turns">
+                <span>Filtrar turno:</span>
+                <label for="m">Ma&ntilde;ana</label>
+                <input type="checkbox" id="m" checked="checked" />
+                <label for="t">Tarde</label>
+                <input type="checkbox" id="t" checked="checked" />
+                <label for="n">Noche</label>
+                <input type="checkbox" id="n" checked="checked" />
+                <a id="filterDaysAndTurns" class="hidden" href="javascript:void(0)">Filtrar por d&iacute;as y turnos</a>
+            </div>
+            <div class="filters daysAndTurns hidden">
+                <label for="LuFilter">Lunes</label>
+                <select name="LuFilter" id="LuFilter">
+                    <option value="All">Todos</option>
+                    <option value="m">Ma&ntilde;ana</option>
+                    <option value="t">Tarde</option>
+                    <option value="n">Noche</option>
+                    <option value="None">Ninguno</option>
+                </select>
+            </div>
+            <div class="alternativesViews">
+    			<div class="dummy">
+    				<h4>Alternativa </h4>
+    				<table class="table table-bordered">
+                        <thead>
+        	                <tr>
+        	                	<th>Turno</th>
+        	                    <th>Lunes</th>
+        	                    <th>Martes</th>
+        	                    <th>Mi&eacute;rcoles</th>
+        	                    <th>Jueves</th>
+        	                    <th>Viernes</th>
+        	                    <th>S&aacute;bado</th>
+        	                </tr>
+                        </thead>
+                        <tbody>
+        	                <tr rel="m">
+        	                	<td>ma&ntilde;ana</td>
+        	                    <td class="Lu"></td>
+        	                    <td class="Ma"></td>
+        	                    <td class="Mi"></td>
+        	                    <td class="Ju"></td>
+        	                    <td class="Vi"></td>
+        	                    <td class="Sa"></td>
+        	                </tr>
+        	                <tr rel="t">
+        	                	<td>tarde</td>
+        	                    <td class="Lu"></td>
+        	                    <td class="Ma"></td>
+        	                    <td class="Mi"></td>
+        	                    <td class="Ju"></td>
+        	                    <td class="Vi"></td>
+        	                    <td class="Sa"></td>
+        	                </tr>
+        	                <tr rel="n">
+        	                	<td>noche</td>
+        	                    <td class="Lu"></td>
+        	                    <td class="Ma"></td>
+        	                    <td class="Mi"></td>
+        	                    <td class="Ju"></td>
+        	                    <td class="Vi"></td>
+        	                    <td class="Sa"></td>
+        	                </tr>
+                        </tbody>
+    				</table>
+                </div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/subject.js"></script>
+    <script type="text/javascript" src="js/inscription.js"></script>
+    <script type="text/javascript" src="js/foundSubjectsController.js"></script>
+    <script type="text/javascript" src="js/foundAlternativesController.js"></script>
+    <script type="text/javascript" src="js/DOMControl.js"></script>
+</body>
+</html>
