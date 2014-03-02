@@ -104,6 +104,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	if(inscription.isPersisted()) {
 		inscription.loadFromStorage();
 		inscription.subjects.forEach(function(subject) {
+			// remove persisted subject colors
+			subjectColors.getColor();
 			foundSubjectsController.addSubject(subject);
 		});
 		inscription.generateAlternatives();
