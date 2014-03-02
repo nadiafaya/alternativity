@@ -68,7 +68,7 @@ var inscription = (function() {
         function getCurrentAlternativeDays () {
             var currentDays = [];
             for (var i = 0; i < currentAlternative.length; i++) {
-                currentDays.concat(currentAlternative[i].schedule.days);
+                currentDays = currentDays.concat(currentAlternative[i].schedule.days);
             }
             return currentDays;
         }
