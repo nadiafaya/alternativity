@@ -1,5 +1,5 @@
 var inscription = (function() {
-    inscription = {};
+    var inscription = {};
     inscription.subjects = [];
     inscription.alternatives = [];
     inscription.availableTurns = {
@@ -15,6 +15,14 @@ var inscription = (function() {
         Vi: true,
         Sa: true
     };
+    inscription.availableTurnsInDays = {
+        Lu: { m: true, t: true, n: true },
+        Ma: { m: true, t: true, n: true },
+        Mi: { m: true, t: true, n: true },
+        Ju: { m: true, t: true, n: true },
+        Vi: { m: true, t: true, n: true },
+        Sa: { m: true, t: true, n: true }  
+    }
 
     inscription.generateAlternatives = function() {
         inscription.alternatives = [];
@@ -44,20 +52,21 @@ var inscription = (function() {
         function scheduleMeetsFilters (schedule) {
             return scheduleIsUniqueInCurrentAlternative(schedule) && 
                 scheduleIsInAvailableTurns(schedule) &&
-                scheduleIsInAvailableDays(schedule);
+                scheduleIsInAvailableDays(schedule) &&
+                scheduleIsInAvailableTurnsInDays(schedule);
         }
 
         function scheduleIsUniqueInCurrentAlternative (schedule) {
 
-            if (currentAlternative.length === 0) { return true };
-
-            var currentDays = getCurrentAlternativeDays();
-            for(var i = 0; i < currentDays.length; i++){
-                var day = currentDays[i];
-                for(var j = 0; j < schedule.days.length; j++){
-                    var scheduleDay = schedule.days[j];
-                    if(day.name === scheduleDay.name && day.turn === scheduleDay.turn ){
-                        return false;
+            if (currentAlternative.length) {
+                var currentDays = getCurrentAlternativeDays();
+                for(var i = 0; i < currentDays.length; i++){
+                    var day = currentDays[i];
+                    for(var j = 0; j < schedule.days.length; j++){
+                        var scheduleDay = schedule.days[j];
+                        if(day.name === scheduleDay.name && day.turn === scheduleDay.turn ){
+                            return false;
+                        }
                     }
                 }
             }
@@ -88,6 +97,17 @@ var inscription = (function() {
                     return false;
                 }
             }
+            return true;
+        }
+
+        function scheduleIsInAvailableTurnsInDays (schedule) {
+            for (var i = 0; i < schedule.days.length; i++) {
+                var day = schedule.days[i].name;
+                var turn = schedule.days[i].turn;
+                if(!inscription.availableTurnsInDays[day][turn]) {
+                    return false;
+                }
+            };
             return true;
         }
 

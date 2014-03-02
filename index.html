@@ -107,40 +107,102 @@
 		</div>
 		<div class="alternativesViewing">
             <h3>Alternativas:</h3>
-            <div class="filters days">
-                <span>Filtrar días:</span>
-                <label for="Lu">Lunes</label>
-                <input type="checkbox" id="Lu" checked="checked" />
-                <label for="Ma">Martes</label>
-                <input type="checkbox" id="Ma" checked="checked" />
-                <label for="Mi">Mi&eacute;rcoles</label>
-                <input type="checkbox" id="Mi" checked="checked" />
-                <label for="Ju">Jueves</label>
-                <input type="checkbox" id="Ju" checked="checked" />
-                <label for="Vi">Viernes</label>
-                <input type="checkbox" id="Vi" checked="checked" />
-                <label for="Sa">S&aacute;bado</label>
-                <input type="checkbox" id="Sa" checked="checked" />
+            <a id="switchGlobalAndAdvancedFilters" data-backuptext="« Filtro básico" href="javascript:void(0)">Filtro avanzado »</a>
+            <div id="globalFilters">
+                <div class="filters days">
+                    <span>Filtrar días:</span>
+                    <label for="Lu">Lunes</label>
+                    <input type="checkbox" id="Lu" checked="checked" />
+                    <label for="Ma">Martes</label>
+                    <input type="checkbox" id="Ma" checked="checked" />
+                    <label for="Mi">Mi&eacute;rcoles</label>
+                    <input type="checkbox" id="Mi" checked="checked" />
+                    <label for="Ju">Jueves</label>
+                    <input type="checkbox" id="Ju" checked="checked" />
+                    <label for="Vi">Viernes</label>
+                    <input type="checkbox" id="Vi" checked="checked" />
+                    <label for="Sa">S&aacute;bado</label>
+                    <input type="checkbox" id="Sa" checked="checked" />
+                </div>
+                <div class="filters turns">
+                    <span>Filtrar turno:</span>
+                    <label for="m">Ma&ntilde;ana</label>
+                    <input type="checkbox" id="m" checked="checked" />
+                    <label for="t">Tarde</label>
+                    <input type="checkbox" id="t" checked="checked" />
+                    <label for="n">Noche</label>
+                    <input type="checkbox" id="n" checked="checked" />
+                </div>
             </div>
-            <div class="filters turns">
-                <span>Filtrar turno:</span>
-                <label for="m">Ma&ntilde;ana</label>
-                <input type="checkbox" id="m" checked="checked" />
-                <label for="t">Tarde</label>
-                <input type="checkbox" id="t" checked="checked" />
-                <label for="n">Noche</label>
-                <input type="checkbox" id="n" checked="checked" />
-                <a id="filterDaysAndTurns" class="hidden" href="javascript:void(0)">Filtrar por d&iacute;as y turnos</a>
-            </div>
-            <div class="filters daysAndTurns hidden">
-                <label for="LuFilter">Lunes</label>
-                <select name="LuFilter" id="LuFilter">
-                    <option value="All">Todos</option>
-                    <option value="m">Ma&ntilde;ana</option>
-                    <option value="t">Tarde</option>
-                    <option value="n">Noche</option>
-                    <option value="None">Ninguno</option>
-                </select>
+            <div id="advancedFilters" class="hidden">
+                <div class="daysAndTurns filters">
+                    <div class="checkboxes">
+                        <div class="checkboxLabel">Lunes</div>
+                        <div id="LuFilter">
+                            <span>Ma&ntilde;ana</span>
+                            <input id="Lu-m" data-day="Lu" data-turn="m" type="checkbox" checked="checked" />
+                            <span>Tarde</span>
+                            <input id="Lu-t" data-day="Lu" data-turn="t" type="checkbox" checked="checked" />
+                            <span>Noche</span>
+                            <input id="Lu-n" data-day="Lu" data-turn="n" type="checkbox" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="checkboxes">
+                        <div class="checkboxLabel">Martes</div>
+                        <div id="MaFilter">
+                            <span>Ma&ntilde;ana</span>
+                            <input id="Ma-m" data-day="Ma" data-turn="m" type="checkbox" checked="checked" />
+                            <span>Tarde</span>
+                            <input id="Ma-t" data-day="Ma" data-turn="t" type="checkbox" checked="checked" />
+                            <span>Noche</span>
+                            <input id="Ma-n" data-day="Ma" data-turn="n" type="checkbox" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="checkboxes">
+                        <div class="checkboxLabel">Mi&eacute;rcoles</div>
+                        <div id="MiFilter">
+                            <span>Ma&ntilde;ana</span>
+                            <input id="Mi-m" data-day="Mi" data-turn="m" type="checkbox" checked="checked" />
+                            <span>Tarde</span>
+                            <input id="Mi-t" data-day="Mi" data-turn="t" type="checkbox" checked="checked" />
+                            <span>Noche</span>
+                            <input id="Mi-n" data-day="Mi" data-turn="n" type="checkbox" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="checkboxes">
+                        <div class="checkboxLabel">Jueves</div>
+                        <div id="JuFilter">
+                            <span>Ma&ntilde;ana</span>
+                            <input id="Ju-m" data-day="Ju" data-turn="m" type="checkbox" checked="checked" />
+                            <span>Tarde</span>
+                            <input id="Ju-t" data-day="Ju" data-turn="t" type="checkbox" checked="checked" />
+                            <span>Noche</span>
+                            <input id="Ju-n" data-day="Ju" data-turn="n" type="checkbox" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="checkboxes">
+                        <div class="checkboxLabel">Viernes</div>
+                        <div id="ViFilter">
+                            <span>Ma&ntilde;ana</span>
+                            <input id="Vi-m" data-day="Vi" data-turn="m" type="checkbox" checked="checked" />
+                            <span>Tarde</span>
+                            <input id="Vi-t" data-day="Vi" data-turn="t" type="checkbox" checked="checked" />
+                            <span>Noche</span>
+                            <input id="Vi-n" data-day="Vi" data-turn="n" type="checkbox" checked="checked" />
+                        </div>
+                    </div>
+                    <div class="checkboxes">
+                        <div class="checkboxLabel">S&aacute;bado</div>
+                        <div id="SaFilter">
+                            <span>Ma&ntilde;ana</span>
+                            <input id="Sa-m" data-day="Sa" data-turn="m" type="checkbox" checked="checked" />
+                            <span>Tarde</span>
+                            <input id="Sa-t" data-day="Sa" data-turn="t" type="checkbox" checked="checked" />
+                            <span>Noche</span>
+                            <input id="Sa-n" data-day="Sa" data-turn="n" type="checkbox" checked="checked" />
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="alternativesViews">
     			<div class="dummy">

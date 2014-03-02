@@ -295,6 +295,8 @@ a.list-group-item:hover {
 .alternativesViews {
     max-height: 500px;
     overflow-y: scroll;
+    border-top: 1px solid #DDD;
+    margin-top: 10px;
 }
 
 .alternatives .filters label {
@@ -302,9 +304,24 @@ a.list-group-item:hover {
 }
 
 .alternatives .filters {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
+    padding: 5px 0;
+    margin-top: 5px;
+}
+
+.alternatives .filters.days {
+    border-bottom: 1px solid #DDD;
+}
+
+.checkboxes {
+    display: inline-block;
+    border-right: 1px solid #DDD;
+    padding-right: 10px;
     margin-top: 10px;
+    margin-right: 10px;
+}
+
+.checkboxes .checkboxLabel {
+    font-weight: bold;
 }
 
 body table>thead>tr>th, 

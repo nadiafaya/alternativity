@@ -95,9 +95,38 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 
 	// Filter days and turns
-	var filterDaysAndTurnsButton = document.getElementById('filterDaysAndTurns');
-	filterDaysAndTurnsButton.addEventListener('click', function() {
-		// Mostrar filtro de días y turnos
+	var switchGlobalAndAdvancedFiltersButton = document.getElementById('switchGlobalAndAdvancedFilters');
+	switchGlobalAndAdvancedFiltersButton.addEventListener('click', function() {
+		// Toggle global filters
+		toggleFilter('globalFilters');
+		// Toggle advanced filter
+		toggleFilter('advancedFilters');
+		// Switch button text
+		var button = switchGlobalAndAdvancedFiltersButton;
+		var oldText = button.innerText;
+		button.innerText = button.dataset.backuptext;
+		button.dataset.backuptext = oldText;
+	});
+
+	var toggleFilter = function(filterId) {
+		var filter = document.getElementById(filterId);
+		if (filter.classList.contains('hidden')) {
+			filter.classList.remove('hidden');
+		} else {
+			filter.classList.add('hidden');
+		}
+	};
+
+	//Advanced filter
+	var dayAndTurnCheckboxes = document.querySelectorAll('.alternatives .filters.daysAndTurns input');
+	Array.prototype.forEach.call(dayAndTurnCheckboxes, function(dayAndTurnCheckbox) {
+		dayAndTurnCheckbox.addEventListener('change', function() {
+			var day = dayAndTurnCheckbox.dataset.day;
+			var turn = dayAndTurnCheckbox.dataset.turn;
+			inscription.availableTurnsInDays[day][turn] = dayAndTurnCheckbox.checked;
+			inscription.generateAlternatives();
+			foundAlternativesController.generateDOM();
+		});
 	});
 
 	// Load the subjects stored on local storage
