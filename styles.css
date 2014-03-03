@@ -224,6 +224,10 @@ a.list-group-item:hover {
     background-color: #75CAEB;
 }
 
+.subjectSchedulesView.inactive .info {
+    background-color: #DDD;
+}
+
 .subject {
     overflow: hidden;
     margin-bottom: 500px;
@@ -235,6 +239,38 @@ a.list-group-item:hover {
     margin-left: 5%;
     text-align: center;
 }
+
+.onOff {
+    border: 1px solid #ddd;
+    display: inline-block;
+}
+
+.onOff span {
+    padding: 5px;
+    display: inline-block;
+    width: 20px;
+}
+
+.onOff span.inactive {
+    cursor: pointer;
+}
+
+.onOff .on.active {
+    background: #75CAEB;
+}
+
+.onOff .off.active {
+    background: #DDD;
+}
+
+.onOff .off.inactive:hover {
+    box-shadow: -5px 0px 5px #7BA9BE;
+}
+
+.onOff .on.inactive:hover {
+    box-shadow: -5px 0px 5px #DDD;
+}
+
 
 .subjectList li {
     padding: 5px;

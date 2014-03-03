@@ -59,24 +59,8 @@ var SubjectScheduleTable = function(subject) {
 	};
 
 	var makeTableRows = function() {
-		var dummyTableRow = document.querySelector('.viewSchedule.dummy tr.subjectSchedulesView');
 		for (var i = 0; i < subject.schedules.length; i++) {
-			var row = cloneTableRowFromDummy(dummyTableRow);
-			fillTableRowWithDays(row, subject.schedules[i]);
-		}
-	};
-
-	var cloneTableRowFromDummy = function(dummyTableRow) {
-		var row = dummyTableRow.cloneNode(true); // deep
-		table.querySelector('tbody').appendChild(row);
-		return row;
-	};
-
-	var fillTableRowWithDays = function(row, schedule) {
-		for (var i = 0; i < schedule.days.length; i++) {
-			var day = schedule.days[i];
-			var dayField = row.querySelector('td[class^="'+day.name+'"]');
-			dayField.classList.add('info');
+			new SubjectScheduleTableRow(table, subject.schedules[i]);
 		}
 	};
 
@@ -93,6 +77,72 @@ var SubjectScheduleTable = function(subject) {
 	};
 
 	init();
+};
+
+var SubjectScheduleTableRow = function(table, schedule) {
+	var scheduleTableRow = {};
+	var row = {};
+
+	var init = function() {
+		createRow();
+		fillRowWithDays();
+		attachOnOffSelectorEvents();
+	};
+
+	var createRow = function() {
+		var dummyTableRow = document.querySelector('.viewSchedule.dummy tr.subjectSchedulesView');
+		row = dummyTableRow.cloneNode(true); // deep
+		table.querySelector('tbody').appendChild(row);
+	};
+
+	var fillRowWithDays = function() {
+		for (var i = 0; i < schedule.days.length; i++) {
+			var day = schedule.days[i];
+			var dayField = row.querySelector('td[class^="'+day.name+'"]');
+			dayField.classList.add('info');
+			dayField.innerText = day.turn;
+		}
+	};
+
+	var attachOnOffSelectorEvents = function() {
+		var onOffButtons = row.querySelectorAll('.onOff span');
+		Array.prototype.forEach.call(onOffButtons, function(onOffButton) {
+			onOffButton.addEventListener('click', onOnOffButtonClick);
+		});
+	};
+
+	function onOnOffButtonClick () {
+		var sibling = this.classList.contains('on')? this.nextElementSibling: this.previousElementSibling;
+		toggleOnOffButton(sibling);
+		toggleOnOffButton(this);
+		switchScheduleActiveness();
+		inscription.generateAlternatives();
+		foundAlternativesController.generateDOM();
+	}
+
+	function toggleOnOffButton (button) {
+		if (button.classList.contains('active')) {
+			button.classList.remove('active');
+			button.classList.add('inactive');
+		} else {
+			button.classList.remove('inactive');
+			button.classList.add('active');
+		}
+	}
+
+	function switchScheduleActiveness () {
+		var onButton = row.querySelector('.onOff .on');
+		var onButtonIsActive = onButton.classList.contains('active');
+		schedule.active = onButtonIsActive;
+		if (onButtonIsActive) {
+			row.classList.remove('inactive');
+		} else {
+			row.classList.add('inactive');
+		}
+	}
+
+	init();
+	return scheduleTableRow;
 };
 
 var SubjectListItem = function(foundSubject) {

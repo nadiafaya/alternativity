@@ -17,6 +17,7 @@ var Day = function (params) {
 
 var Schedule = function () {
     this.days = [];
+    this.active = true;
 };
 
 var Subject = function (params) {

@@ -50,7 +50,8 @@ var inscription = (function() {
         }
 
         function scheduleMeetsFilters (schedule) {
-            return scheduleIsUniqueInCurrentAlternative(schedule) && 
+            return schedule.active &&
+                scheduleIsUniqueInCurrentAlternative(schedule) && 
                 scheduleIsInAvailableTurns(schedule) &&
                 scheduleIsInAvailableDays(schedule) &&
                 scheduleIsInAvailableTurnsInDays(schedule);
@@ -134,6 +135,14 @@ var inscription = (function() {
         return JSON.parse(localStorage.getItem(this.storageKey));
     };
 
+    inscription.findSubjectByName = function(subjectName) {
+        inscription.subjects.forEach(function(subject) {
+            if (subject.name === subjectName) {
+                return subject;
+            }
+        });
+        return new Subject();
+    };
 
     return inscription;
 })();
