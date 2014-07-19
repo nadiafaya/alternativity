@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		inscription.subjects.push(newSubject);
 		inscription.generateAlternatives();
 		foundAlternativesController.generateDOM();
-		inscription.persist();
+		inscription.persistSubjects();
 
 		// Close modal
 		var closeButton = document.querySelector('#addSubjectForm .closeModal');

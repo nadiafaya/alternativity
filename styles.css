@@ -401,6 +401,49 @@ a.list-group-item:hover {
     position: relative;
 }
 
+.alternativeHeader h4 {
+    float: left;
+}
+
+.alternativeHeader {
+    width: 100%;
+    overflow: hidden;
+}
+
+.alternativeHeader .pickAlternativeStars {
+    float: right;
+    margin-top: 1.33em;
+    position: relative;
+}
+
+.alternativeHeader .pickAlternativeStars .star {
+    display: inline-block;
+}
+
+.alternativeHeader .pickAlternativeStars i,
+.alternativeHeader .pickAlternativeStars span {
+    cursor: pointer;
+    color: #999;
+}
+
+.alternativeHeader .pickAlternativeStars .star:hover i:before,
+.alternativeHeader .pickAlternativeStars .star.picked i:before {
+    color: #E3CF7A;
+    content: "\f005";
+}
+
+.alternativeHeader .pickAlternativeStars .star:hover span,
+.alternativeHeader .pickAlternativeStars .star.picked span {
+    color: #000;
+}
+
+.alternativeHeader .pickAlternativeStars span {
+    margin-left: -16px;
+    position: absolute;
+    top: 6px;
+    font-size: 11px;
+}
+
 .alternativesViewing {
     width: 65%;
     margin: 0 auto;
@@ -457,6 +500,7 @@ a.list-group-item:hover {
 
 .alternative table {
     text-align: center;
+    width: 100%;
 }
 
 .checkboxes .checkboxLabel {

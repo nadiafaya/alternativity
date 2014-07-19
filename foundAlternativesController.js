@@ -1,13 +1,16 @@
 var foundAlternativesController = (function() {
 	var foundAlternativesController = {};
+	var alternativeViewList = [];
 
 	foundAlternativesController.generateDOM = function() {
-		cleanOldDOM();
+		cleanAlternativeViews();
 		createAlternativeViews();
 	};
 
-	var cleanOldDOM = function() {
-		cleanAlternativeViews();
+	foundAlternativesController.unpickStarInAlternatives = function(starNumber) {
+		for (var i = 0; i < alternativeViewList.length; i++) {
+			alternativeViewList[i].unpickStar(starNumber);
+		};
 	};
 
 	var cleanAlternativeViews = function() {
@@ -15,11 +18,13 @@ var foundAlternativesController = (function() {
 		for (var i = 0; i < alternativesViews.length; i++) {
 			alternativesViews[i].remove();
 		}
+		alternativeViewList = [];
 	};
 
 	var createAlternativeViews = function() {
 		for (var i = 0; i < inscription.alternatives.length; i++) {
-			new AlternativeView(inscription.alternatives[i], i);
+			var alternativeView = new AlternativeView(inscription.alternatives[i], i);
+			alternativeViewList.push(alternativeView);
 		}
 	};
 
@@ -28,12 +33,16 @@ var foundAlternativesController = (function() {
 
 
 var AlternativeView = function(alternative, index) {
+	var alternativeView = {};
 	var viewHtml = {};
+	var starsHtml = {};
 
 	var init = function() {
 		cloneDummyHtml();
 		addTitle();
 		paintAlternativeDays();
+		paintStars();
+		attachStarsEvent();
 	};
 
 	var cloneDummyHtml = function() {
@@ -50,8 +59,8 @@ var AlternativeView = function(alternative, index) {
 	};
 
 	var paintAlternativeDays = function() {
-		for (var i = 0; i < alternative.length; i++) {
-			var alternativeSubject = alternative[i];
+		for (var i = 0; i < alternative.schedules.length; i++) {
+			var alternativeSubject = alternative.schedules[i];
 			for (var j = 0; j < alternativeSubject.schedule.days.length; j++) {
 				var day = alternativeSubject.schedule.days[j];
 				var dayField = viewHtml.querySelector('tr[rel="'+day.turn+'"] td.'+day.name);
@@ -62,25 +71,52 @@ var AlternativeView = function(alternative, index) {
 		}
 	};
 
-	init();
-};
-
-var AlternativeSubject = function(subject) {
-	var alternativeSubject = {};
-	var listElement = {};
-
-	var init = function() {
-		createListElement();
+	var paintStars = function() {
+		var starButtons = viewHtml.querySelectorAll('.pickAlternativeStars .star');
+		for (var i = 0; i < starButtons.length; i++) {
+			starsHtml[(i+1).toString()] = starButtons[i];
+		}
+		for (var i = 0; i < starButtons.length; i++) {
+			starButtons[i].addEventListener('click', starClicked);
+			if (alternative.pickedNumber) {
+				pickStar(alternative.pickedNumber);
+			}
+		}
 	};
 
-	var createListElement = function() {
-		listElement = document.createElement('li');
-		listElement.classList.add('list-group-item');
-		listElement.innerText = subject.name;
-		listElement.style.backgroundColor = subject.color;
-		document.querySelector('.alternativesSubjects ul').appendChild(listElement);
+	var attachStarsEvent = function() {
+	};
+
+	var starClicked = function() {
+		var starNumber = this.dataset.starnumber;
+		if (alternative.pickedNumber === starNumber) {
+			alternativeView.unpickStar(starNumber);
+		} else {
+			foundAlternativesController.unpickStarInAlternatives(starNumber);
+			var numbers = ['1','2','3'];
+			numbers.splice(numbers.indexOf(starNumber),1);
+			for (var i = 0; i < numbers.length; i++) {
+				alternativeView.unpickStar(numbers[i]);
+			};
+			pickStar(starNumber);
+		}
+	};
+
+	var pickStar = function(starNumber) {
+		starsHtml[starNumber].classList.add('picked');
+		alternative.pickedNumber = starNumber;
+		inscription.persistPickedAlternatives();
+	};
+
+	alternativeView.unpickStar = function(starNumber) {
+		var star = starsHtml[starNumber];
+		star.classList.remove('picked');
+		if (alternative.pickedNumber === starNumber) {
+			alternative.pickedNumber = "";
+			inscription.persistPickedAlternatives();
+		}
 	};
 
 	init();
-	return alternativeSubject;
+	return alternativeView;
 };

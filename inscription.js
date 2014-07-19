@@ -2,6 +2,7 @@ var inscription = (function() {
     var inscription = {};
     inscription.subjects = [];
     inscription.alternatives = [];
+    inscription.pickedAlternatives = [];
     inscription.availableTurns = {
         m: true,
         t: true,
@@ -40,7 +41,10 @@ var inscription = (function() {
                     if(subjectsToProcess.length){
                         processNextSubject();
                     } else {
-                        inscription.alternatives.push(currentAlternative.slice());
+                        var finalAlternative = {};
+                        finalAlternative.schedules = currentAlternative.slice();
+                        addPickedStatusFromStorage(finalAlternative);
+                        inscription.alternatives.push(finalAlternative);
                     }   
                     currentAlternative.pop();
                 }
@@ -112,36 +116,84 @@ var inscription = (function() {
             return true;
         }
 
+        function addPickedStatusFromStorage (alternative) {
+            if (inscription.pickedAlternatives) {
+                for (var i = 0; i < inscription.pickedAlternatives.length; i++) {
+                    var picked = inscription.pickedAlternatives[i];
+                    var pickedCopy = { schedules: picked.schedules };
+                    if (alternativesAreEqual(alternative, pickedCopy)) {
+                        alternative.pickedNumber = picked.pickedNumber;
+                        return;
+                    }
+                }
+            }
+        }
+
+        function alternativesAreEqual (alt1, alt2) {
+            return JSON.stringify(alt1) == JSON.stringify(alt2);
+        }
+
         if (subjectsToProcess.length) {
             processNextSubject();
         }
     };
 
-    inscription.storageKey = "_alternativity";
+    function findStoragePickedAlternative (alternative) {
+        if (inscription.pickedAlternatives) {
+            for (var i = 0; i < inscription.pickedAlternatives.length; i++) {
+                var picked = inscription.pickedAlternatives[i];
+                var pickedCopy = { schedules: picked.schedules };
+                var alternativeCopy = { schedules: alternative.schedules };
+                if (JSON.stringify(pickedCopy) == JSON.stringify(alternativeCopy)) {
+                    return picked;
+                }
+            }
+        }
+        return;
+    }
 
-    inscription.persist = function() {
-        localStorage.setItem(this.storageKey, JSON.stringify(this.subjects));
+    inscription.subjectsStorageKey = "_alternativity_subjects";
+    inscription.pickedAlternativesStorageKey = "_alternativity_picked_alternatives";
+
+    inscription.persistSubjects = function() {
+        localStorage.setItem(this.subjectsStorageKey, JSON.stringify(this.subjects));
+    };
+
+    inscription.persistPickedAlternatives = function() {
+        for (var i = 0; i < this.alternatives.length; i++) {
+            var alternative = this.alternatives[i];
+            var pickedAlternative = findStoragePickedAlternative(alternative);
+            if (alternative.pickedNumber){
+                if (pickedAlternative) {
+                    pickedAlternative.pickedNumber = alternative.pickedNumber;
+                } else {
+                    this.pickedAlternatives.push(this.alternatives[i]);
+                }
+            }
+
+            if (!alternative.pickedNumber && pickedAlternative) {
+                var index = this.pickedAlternatives.indexOf(pickedAlternative);
+                this.pickedAlternatives.splice(index, 1);
+            }
+        };
+        localStorage.setItem(this.pickedAlternativesStorageKey, JSON.stringify(this.pickedAlternatives));
     };
 
     inscription.loadFromStorage = function() {
-        this.subjects = this.fromStorage();
+        this.subjects = this.subjectsFromStorage() || [];
+        this.pickedAlternatives = this.alternativesFromStorage() || [];
     };
 
     inscription.isPersisted = function() {
-        return !!this.fromStorage();
+        return !!this.subjectsFromStorage();
     };
     
-    inscription.fromStorage = function() {
-        return JSON.parse(localStorage.getItem(this.storageKey));
+    inscription.subjectsFromStorage = function() {
+        return JSON.parse(localStorage.getItem(this.subjectsStorageKey));
     };
 
-    inscription.findSubjectByName = function(subjectName) {
-        inscription.subjects.forEach(function(subject) {
-            if (subject.name === subjectName) {
-                return subject;
-            }
-        });
-        return new Subject();
+    inscription.alternativesFromStorage = function() {
+        return JSON.parse(localStorage.getItem(this.pickedAlternativesStorageKey));
     };
 
     return inscription;
