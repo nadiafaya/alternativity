@@ -5,6 +5,8 @@ var foundAlternativesController = (function() {
 	foundAlternativesController.generateDOM = function() {
 		cleanAlternativeViews();
 		createAlternativeViews();
+		var emptyText = document.querySelector('#alternatives #noAlternatives') ;
+        emptyText.styles.display = inscription.alternatives.length? 'block' : 'none';
 	};
 
 	foundAlternativesController.unpickStarInAlternatives = function(starNumber) {
