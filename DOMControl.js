@@ -152,6 +152,21 @@ document.addEventListener("DOMContentLoaded", function(){
 		});
 	});
 
+	// Show picked alternatives
+	var showOnlyPickedButton = document.querySelector('.alternatives #showPickedAlternatives');
+	showOnlyPickedButton.addEventListener('click', function() {
+		var isActive = showOnlyPickedButton.classList.contains('active');
+		if (isActive) {
+			showOnlyPickedButton.classList.remove('active');
+			showOnlyPickedButton.innerText = "Mostrar solo las elegidas";
+			foundAlternativesController.showAllAlternatives();
+		} else {
+			showOnlyPickedButton.classList.add('active');
+			showOnlyPickedButton.innerText = "Mostrar todas";
+			foundAlternativesController.showOnlyPickedAlternatives();
+		}
+	});
+
 	// Load the subjects stored on local storage
 	if(inscription.isPersisted()) {
 		inscription.loadFromStorage();

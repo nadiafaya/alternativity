@@ -13,6 +13,18 @@ var foundAlternativesController = (function() {
 		};
 	};
 
+	foundAlternativesController.showOnlyPickedAlternatives = function() {
+		for (var i = 0; i < alternativeViewList.length; i++) {
+			alternativeViewList[i].hideIfNotPicked();
+		};
+	};
+
+	foundAlternativesController.showAllAlternatives = function() {
+		for (var i = 0; i < alternativeViewList.length; i++) {
+			alternativeViewList[i].show();
+		};
+	};
+
 	var cleanAlternativeViews = function() {
 		var alternativesViews = document.querySelectorAll('.alternativesViews .alternative');
 		for (var i = 0; i < alternativesViews.length; i++) {
@@ -115,6 +127,16 @@ var AlternativeView = function(alternative, index) {
 			alternative.pickedNumber = "";
 			inscription.persistPickedAlternatives();
 		}
+	};
+
+	alternativeView.hideIfNotPicked = function() {
+		if (!alternative.pickedNumber) {
+			viewHtml.style.display = 'none';
+		}
+	};
+
+	alternativeView.show = function() {
+		viewHtml.style.display = 'block';
 	};
 
 	init();

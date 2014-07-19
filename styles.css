@@ -526,3 +526,9 @@ body .table>tfoot>tr>td {
 .hidden {
     display: none;
 }
+
+#showPickedAlternatives.active {
+    border-bottom: 0;
+    background: #999;
+    color: #FFF;
+}
