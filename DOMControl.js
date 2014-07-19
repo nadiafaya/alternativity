@@ -35,6 +35,15 @@ document.addEventListener("DOMContentLoaded", function(){
 			modal.style.display = 'none';
 		});
 	});
+
+	// escapeModal
+	document.body.addEventListener('keydown', function(event) {
+		if (event.keyCode == 27) {
+			Array.prototype.forEach.call(closeModalButtons, function(button) {
+				button.click();
+			});
+		};
+	});
 	
 	// Add subject
 	var addSubjectButton = document.querySelector('#addSubject');

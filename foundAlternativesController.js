@@ -6,7 +6,7 @@ var foundAlternativesController = (function() {
 		cleanAlternativeViews();
 		createAlternativeViews();
 		var emptyText = document.querySelector('#alternatives #noAlternatives') ;
-        emptyText.styles.display = inscription.alternatives.length? 'block' : 'none';
+        emptyText.style.display = inscription.alternatives.length? 'block' : 'none';
 	};
 
 	foundAlternativesController.unpickStarInAlternatives = function(starNumber) {
