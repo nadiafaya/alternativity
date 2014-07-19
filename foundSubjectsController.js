@@ -65,7 +65,7 @@ var SubjectScheduleTable = function(subject) {
 	};
 
 	this.showTable = function() {
-		table.style.display = 'table';
+		table.style.display = 'block';
 	};
 
 	this.hideTable = function() {
@@ -164,6 +164,10 @@ var SubjectListItem = function(foundSubject) {
 		listItem.innerText = foundSubject.subject.name;
 		var subjectItemList = document.querySelector('.subjectList .list-group');
 		subjectItemList.appendChild(listItem);
+		var emptyText = subjectItemList.querySelector('.empty-text');
+		if (emptyText) {
+			emptyText.remove();	
+		}
 	};
 
 	var createRemoveButton = function() {
@@ -176,9 +180,11 @@ var SubjectListItem = function(foundSubject) {
 
 	var onRemoveButtonClicked = function(event) {
 		event.stopPropagation();
-		removeSubjectFromInscription();
-		removeSubjectFromFoundSubjects();
-		reGenerateFoundAlternatives();
+		if (confirm('¿Estás seguro que querés eliminar esta materia?')) {
+			removeSubjectFromInscription();
+			removeSubjectFromFoundSubjects();
+			reGenerateFoundAlternatives();
+		}
 	};
 
 	var onListItemClick = function() {
@@ -202,6 +208,14 @@ var SubjectListItem = function(foundSubject) {
 	var removeSubjectFromFoundSubjects = function() {
 		listItem.remove();
 		foundSubject.subjectScheduleTable.remove();
+		var subjectItemList = document.querySelector('.subjectList .list-group');
+		var remainingSubjectListItems = subjectItemList.querySelectorAll('.list-group-item');
+		if (!remainingSubjectListItems.length) {
+			var emptyText = document.createElement('div');
+			emptyText.classList.add('empty-text');
+			emptyText.innerText = 'No hay materias';
+			subjectItemList.appendChild(emptyText);
+		}
 		foundSubjectsController.removeFromList(foundSubject);
 		foundSubjectsController.selectFirstSubject();
 	};

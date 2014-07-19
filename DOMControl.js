@@ -1,19 +1,38 @@
 // DOM Events
 document.addEventListener("DOMContentLoaded", function(){
 	
-	// Close panel
-	var closeButtons = document.querySelectorAll('.closePanel');
-	Array.prototype.forEach.call(closeButtons, function(button) {
+	// Switch page
+	var navButtons = document.querySelectorAll('.navbar .navbar-button');
+	Array.prototype.forEach.call(navButtons, function(button) {
 		button.addEventListener('click', function() {
-			var target = document.querySelector(button.dataset.target);
-			var show = target.classList.contains('hidden');
-			if (show) {
-				target.classList.remove('hidden');
-				button.classList.add('chevron-up');
-			} else {
-				target.classList.add('hidden');
-				button.classList.remove('chevron-up');
-			}
+			// remove active nav button
+			document.querySelector('.navbar-button.active').classList.remove('active');
+			// add active nav button
+			button.classList.add('active');
+			// hide current page
+			document.querySelector('.page.active').classList.remove('active');
+			// show new page
+			document.querySelector(button.dataset.page).classList.add('active');
+		});
+	});
+
+	// openModal
+	var modalButtons = document.querySelectorAll('.triggerModal');
+	Array.prototype.forEach.call(modalButtons, function(button) {
+		button.addEventListener('click', function() {
+			var modalSelector = button.dataset.modal;
+			var modal = document.querySelector(modalSelector);
+			modal.style.display = 'block';
+		});
+	});
+
+	// closeModal
+	var closeModalButtons = document.querySelectorAll('.closeModal');
+	Array.prototype.forEach.call(closeModalButtons, function(button) {
+		button.addEventListener('click', function() {
+			var modalSelector = button.dataset.modal;
+			var modal = document.querySelector(modalSelector);
+			modal.style.display = 'none';
 		});
 	});
 	
@@ -57,6 +76,10 @@ document.addEventListener("DOMContentLoaded", function(){
 		inscription.generateAlternatives();
 		foundAlternativesController.generateDOM();
 		inscription.persist();
+
+		// Close modal
+		var closeButton = document.querySelector('#addSubjectForm .closeModal');
+		closeButton.click();
 	});
 
 	// Filter turns

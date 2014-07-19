@@ -24,6 +24,7 @@ var Subject = function (params) {
     var subject = {}; 
     var schedulesText = cleanAccents(params.schedules); // Esto es por "Sábado"
     subject.name = params.name || '';
+    subject.shortName = makeShortName();
     subject.color = subjectColors.getColor();
     subject.schedules = [];
 
@@ -55,6 +56,17 @@ var Subject = function (params) {
         } else{
             return '';
         }
+    }
+
+    function makeShortName () {
+        var accentTranslations = {
+            'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+            'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U'
+        };
+        var cleanName = subject.name.replace(/[á,é,í,ó,ú,Á,É,Í,Ó,Ú]/g, function(match){ 
+            return accentTranslations[match];
+        });
+        return cleanName.match(/\b(\w)|[A-Z]/g).join('').toUpperCase();
     }
 
     parseSchedulesText();

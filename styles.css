@@ -10,24 +10,92 @@ a {
     text-decoration: none;
 }
 
+body {
+    margin: 0;
+}
+
+.navbar {
+    background-color: #F8F8F8;  border-color: #E7E7E7;
+    border-width: 0 1px 4px 1px;
+    border-style: solid;
+}
+
+.navbar-container {
+    padding: 0 10%;
+}
+
+.navbar-menu-toggle {
+    display: none;
+}
+
+.navbar-brand {
+    display: inline-block;  
+    padding: 20px 15px 15px 15px;  
+    font-size: 25px;  
+    line-height: 1;  
+    color: #333;
+    width: 150px;
+    vertical-align: top;
+}
+
+.navbar-description {
+    display: inline-block;
+    font-size: 17px;
+    color: #999;
+    width: calc(100% - 185px);
+    line-height: 1.5;
+    padding: 10px 0 8px 0;
+}
+
+.navbar-second-row {
+    text-align: center;
+}
+
+.navbar-button {
+    display: inline-block;
+    vertical-align: top;
+    padding: 15px 10px 10px 10px;
+    cursor: pointer;
+    color: #999;
+    border-right: 1px solid transparent;
+    width: 25%;
+    box-shadow: inset 0px 8px 10px -10px #CCC;
+}
+
+.navbar-button:hover, .navbar-button.active {
+    color: #666;
+}
+
+.navbar-button:last-child:after {
+    display: none;
+}
+
+.navbar-button:after {
+    width: 1px;
+    height: 30px;
+    background: #999;
+    content: " ";
+    float: right;
+    margin-top: -3px;
+}
+
 .container {
     margin: 0 auto 100px auto;
     width: 1170px;
     font-size: 14px;
 }
 
-#instructions ul {
-    list-style: decimal;
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
 }
 
 h1 {
     font-weight: normal;
     font-size: 36px;
-}
-
-h1 .small {
-    font-size: 65%;
-    color: #999;
 }
 
 h2 {
@@ -60,6 +128,7 @@ table th {
     -webkit-box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
     margin-bottom: 20px;
     border-radius: 4px;
+    background-color: #FFF;
 }
 
 .panel .panel-heading {
@@ -75,21 +144,29 @@ table th {
     color: #333;
 }
 
-.closePanel {
-    float: right;
-}
-
-.closePanel:hover, .openPanel:hover {
-     cursor: pointer;
-}
-
 .panel-body {
     padding: 15px;
     overflow: hidden;
 }
 
-.panel-body p {
-    margin: 0;
+.instructionPanelRow {
+    text-align: center;
+}
+
+.instructionPanelRow .panel {
+    width: 25%;
+    display: inline-block;
+    margin: 2%;
+    padding: 20px;
+    vertical-align: top;
+}
+
+.instructionPanelRow .panel h4 {
+    margin-top: 0;
+}
+
+.instructionPanelRow .panel h4, .instructionPanelRow .panel p {
+    text-align: left;
 }
 
 .form-group {
@@ -138,20 +215,7 @@ table th {
     height: 150px;
 }
 
-.clarifiaction {
-    font-weight: normal;
-}
-
-.panelBody a {
-    text-decoration: none;
-    color: #5A5AFF;
-}
-
-.panelBody a:hover {
-    color: #00C;
-}
-
-#addSubject {
+.btn-default {
     color: #555;
     background-color: #EEE;
     border-color: #E2E2E2;
@@ -166,11 +230,11 @@ table th {
     border-style: solid;
 }
 
-#addSubject:hover {
+.btn-default:hover {
     cursor: pointer;
 }
 
-#addSubject:active {
+.btn-default:active {
     border-bottom-width: 1px;
     margin-top: 4px;
 }
@@ -182,6 +246,13 @@ table th {
 .subjectList {
     float: left;
     width: 40%;
+}
+
+.empty-text {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
 }
 
 .list-group-item {
@@ -211,13 +282,20 @@ a.list-group-item {
 a.list-group-item.active, a.list-group-item.active:hover {
     z-index: 2;
     color: #FFF;
-    background-color: #158CBA;
-    border-color: #158CBA;
+    background-color: #75CAEB;
+    border-color: #75CAEB;
 }
 
 a.list-group-item:hover {
     text-decoration: none;
     background-color: #F5F5F5;
+}
+
+.subjectList .btn {
+    width: 100%;
+    margin-top: 10px;
+    background: #BDDFBD;
+    border-color: #90B490;
 }
 
 .subjectSchedulesView .info {
@@ -238,6 +316,17 @@ a.list-group-item:hover {
     width: 55%;
     margin-left: 5%;
     text-align: center;
+}
+
+.viewSchedule {
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.viewSchedule h3 {
+    text-align: left;
+    margin-top: 0;
 }
 
 .onOff {
@@ -271,17 +360,6 @@ a.list-group-item:hover {
     box-shadow: -5px 0px 5px #DDD;
 }
 
-
-.subjectList li {
-    padding: 5px;
-    border: 1px solid #ccc;
-}
-
-.subjectList li:hover {
-    cursor: pointer;
-    background-color: #CCC;
-}
-
 .viewSchedule, .alternativesViews table {
     margin: 0 auto;
 }
@@ -290,32 +368,43 @@ a.list-group-item:hover {
     display: none;
 }
 
+.modal-container {
+    display: none; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.modal-overlay {
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+}
+
+.modal {
+    top: 200px;
+    position: absolute;
+    left: calc(50% - 450px);
+    z-index: 1001;
+}
+
+.closeModal {
+    float: right;
+    cursor: pointer;
+}
+
 .alternatives {
     overflow: hidden;
     position: relative;
 }
 
 .alternativesViewing {
-    display: inline-block;
-    width: 64%;
-    margin-left: 5%;
+    width: 65%;
+    margin: 0 auto;
     border-bottom: 2px solid #DDD;
-}
-
-.alternativesSubjects {
-    display: inline-block;
-    width: 30%;
-    vertical-align: top;
-}
-
-.alternativesSubjects ul {
-    list-style: none;
-    padding: 0px;
-}
-
-.alternativesSubjects ul li {
-    color: #FFF;
-    border-color: #999;
 }
 
 .removeSubjectButton {
@@ -329,10 +418,11 @@ a.list-group-item:hover {
 }
 
 .alternativesViews {
-    max-height: 500px;
-    overflow-y: scroll;
-    border-top: 1px solid #DDD;
-    margin-top: 10px;
+    margin: 20px 0;
+}
+
+.alternatives .filterBox {
+    margin-bottom: 10px;
 }
 
 .alternatives .filters label {
@@ -344,8 +434,12 @@ a.list-group-item:hover {
     margin-top: 5px;
 }
 
-.alternatives .filters.days {
+.alternatives .filters {
     border-bottom: 1px solid #DDD;
+}
+
+#advancedFilters .filters {
+    border-bottom: none;
 }
 
 .checkboxes {
@@ -354,6 +448,15 @@ a.list-group-item:hover {
     padding-right: 10px;
     margin-top: 10px;
     margin-right: 10px;
+    width: 30%;
+}
+
+.alternative td.day {
+    color: #FFF;
+}
+
+.alternative table {
+    text-align: center;
 }
 
 .checkboxes .checkboxLabel {
@@ -374,62 +477,6 @@ body table>tfoot>tr>td,
 body .table>tfoot>tr>td {
     border-color: #DDD;
     height: 35px;
-}
-
-.chevron {
-    position: relative;
-    text-align: center;
-    padding: 3px;
-    height: 0px;
-    width: 10px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
-
-.chevron:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 51%;
-    background: #000;
-    transform: skew(0deg, 40deg);
-    -webkit-transform: skew(0deg, 40deg);
-    -moz-transform: skew(0deg, 40deg);
-    -o-transform: skew(0deg, 40deg);
-    border-top-left-radius: 5px;
-}
-
-.chevron:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 50%;
-    background: #000;
-    transform: skew(0deg, -40deg);
-    -webkit-transform: skew(0deg, -40deg);
-    -moz-transform: skew(0deg, -40deg);
-    -o-transform: skew(0deg, -40deg);   
-    border-top-right-radius: 5px;
-}
-
-.chevron.chevron-up:after {
-    transform: skew(0deg, 40deg);
-    -webkit-transform: skew(0deg, 40deg);
-    -moz-transform: skew(0deg, 40deg);
-    -o-transform: skew(0deg, 40deg);
-    border-bottom-right-radius: 30px;
-}
-
-.chevron.chevron-up:before {
-    transform: skew(0deg, -40deg);
-    -webkit-transform: skew(0deg, -40deg);
-    -moz-transform: skew(0deg, -40deg);
-    -o-transform: skew(0deg, -40deg);
-    border-bottom-left-radius: 30px;
 }
 
 .hidden {

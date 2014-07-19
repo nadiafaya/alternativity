@@ -4,31 +4,16 @@ var foundAlternativesController = (function() {
 	foundAlternativesController.generateDOM = function() {
 		cleanOldDOM();
 		createAlternativeViews();
-		createAlternativeSubjectList();
 	};
 
 	var cleanOldDOM = function() {
 		cleanAlternativeViews();
-		cleanAlternativeSubjects();
 	};
 
 	var cleanAlternativeViews = function() {
 		var alternativesViews = document.querySelectorAll('.alternativesViews .alternative');
 		for (var i = 0; i < alternativesViews.length; i++) {
 			alternativesViews[i].remove();
-		}
-	};
-
-	var cleanAlternativeSubjects = function() {
-		var alternativesSubjects = document.querySelectorAll('.alternativesSubjects ul li');
-		for (var i = 0; i < alternativesSubjects.length; i++) {
-			alternativesSubjects[i].remove();
-		}
-	};
-
-	var createAlternativeSubjectList = function() {
-		for (var j = 0; j < inscription.subjects.length; j++) {
-			new AlternativeSubject(inscription.subjects[j]);
 		}
 	};
 
@@ -69,8 +54,10 @@ var AlternativeView = function(alternative, index) {
 			var alternativeSubject = alternative[i];
 			for (var j = 0; j < alternativeSubject.schedule.days.length; j++) {
 				var day = alternativeSubject.schedule.days[j];
-				var dayField = viewHtml.querySelector('tr[rel="'+day.turn+'"] td[class^="'+day.name+'"]');
+				var dayField = viewHtml.querySelector('tr[rel="'+day.turn+'"] td.'+day.name);
 				dayField.style.backgroundColor = alternativeSubject.subject.color;
+				dayField.innerText = alternativeSubject.subject.shortName;
+				dayField.title = alternativeSubject.subject.name;
 			}
 		}
 	};
