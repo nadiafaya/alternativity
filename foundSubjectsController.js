@@ -46,6 +46,7 @@ var SubjectScheduleTable = function(subject) {
 
 	var init = function() {
 		cloneTableFromDummy();
+		addSubjectName();
 		makeTableRows();
 	};
 
@@ -56,6 +57,11 @@ var SubjectScheduleTable = function(subject) {
 		table.setAttribute('rel', subject.name);
 		table.querySelector('tr.subjectSchedulesView').remove();
 		document.querySelector('.subjectView').appendChild(table);
+	};
+
+	var addSubjectName = function() {
+		var subjectTitle = 	table.querySelector('.subjectTitle');
+		subjectTitle.innerText = subject.name;
 	};
 
 	var makeTableRows = function() {
