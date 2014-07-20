@@ -527,6 +527,15 @@ body .table>tfoot>tr>td {
     display: none;
 }
 
+.badge {
+    display: inline-block;
+    background: #666;
+    color: #FFF;
+    font-size: 12px;
+    padding: 0px 7px;
+    border-radius: 5px;
+}
+
 #showPickedAlternatives.active {
     border-bottom: 0;
     background: #999;

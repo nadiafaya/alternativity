@@ -5,8 +5,8 @@ var foundAlternativesController = (function() {
 	foundAlternativesController.generateDOM = function() {
 		cleanAlternativeViews();
 		createAlternativeViews();
-		var emptyText = document.querySelector('#alternatives #noAlternatives') ;
-        emptyText.style.display = inscription.alternatives.length? 'none' : 'block';
+		toggleEmptyText();
+		updateBadgeCount();
 	};
 
 	foundAlternativesController.unpickStarInAlternatives = function(starNumber) {
@@ -40,6 +40,17 @@ var foundAlternativesController = (function() {
 			var alternativeView = new AlternativeView(inscription.alternatives[i], i);
 			alternativeViewList.push(alternativeView);
 		}
+	};
+
+	var toggleEmptyText = function() {
+		var emptyText = document.querySelector('#alternatives #noAlternatives') ;
+        emptyText.style.display = inscription.alternatives.length? 'none' : 'block';
+	};
+
+	var updateBadgeCount = function() {
+		var badge = document.getElementById('alternativesBadge');
+		badge.innerText = inscription.alternatives.length;
+		badge.className = inscription.alternatives.length? 'badge' : 'hidden';
 	};
 
 	return foundAlternativesController;
