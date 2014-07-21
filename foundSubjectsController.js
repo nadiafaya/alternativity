@@ -55,7 +55,8 @@ var SubjectScheduleTable = function(subject) {
 		table = dummyTable.cloneNode(true); //deep
 		table.classList.remove('dummy');
 		table.setAttribute('rel', subject.name);
-		table.querySelector('tr.subjectSchedulesView').remove();
+		var view = table.querySelector('tr.subjectSchedulesView')
+		view.parentNode.removeChild(view);
 		document.querySelector('.subjectView').appendChild(table);
 	};
 
@@ -79,7 +80,7 @@ var SubjectScheduleTable = function(subject) {
 	};
 
 	this.remove = function() {
-		table.remove();
+		table.parentNode.removeChild(table);
 	};
 
 	init();
@@ -172,7 +173,7 @@ var SubjectListItem = function(foundSubject) {
 		subjectItemList.appendChild(listItem);
 		var emptyText = subjectItemList.querySelector('.empty-text');
 		if (emptyText) {
-			emptyText.remove();	
+			emptyText.parentNode.removeChild(emptyText);	
 		}
 	};
 
@@ -212,7 +213,7 @@ var SubjectListItem = function(foundSubject) {
 	};
 
 	var removeSubjectFromFoundSubjects = function() {
-		listItem.remove();
+		listItem.parentNode.removeChild(listItem);
 		foundSubject.subjectScheduleTable.remove();
 		var subjectItemList = document.querySelector('.subjectList .list-group');
 		var remainingSubjectListItems = subjectItemList.querySelectorAll('.list-group-item');

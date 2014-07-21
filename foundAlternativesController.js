@@ -37,7 +37,7 @@ var foundAlternativesController = (function() {
 	var cleanAlternativeViews = function() {
 		var alternativesViews = document.querySelectorAll('.alternativesViews .alternative');
 		for (var i = 0; i < alternativesViews.length; i++) {
-			alternativesViews[i].remove();
+			alternativesViews[i].parentNode.removeChild(alternativesViews[i]);
 		}
 		alternativeViewList = [];
 	};
