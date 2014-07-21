@@ -95,7 +95,7 @@
                                     <td class="Vi"></td>
                                     <td class="Sa"></td>
                                     <td class="activatedSchedule">
-                                        <div class="onOff">
+                                        <div class="onOff" title="Ignorar este horario para calcular las alternativas">
                                             <span class="on active">ON</span><!--
                                          --><span class="off inactive">OFF</span>
                                         </div>
@@ -126,10 +126,8 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2" for="subjectSchedules">Horarios de materia:<span class="clarification">(colocar cada horario en una nueva línea)</span></label>
-                            <textarea class="form-control" name="subjectSchedules" id="subjectSchedules" cols="100" rows="10" placeholder="K4011    Lu(m)1:5 Ju(m)1:5                                                                                                                                                                                                                                                            
-                    K4051   Lu(n)1:5 Mi(n)1:5                                                                                                                                                                                                                                                            
-                    K4052   Ma(n)1:5 Ju(n)1:5                                                                                                                                                                                                                                                            
-                    K4052   Vi(n)1:5 S&aacute;(t)1:5"></textarea>
+                            <textarea class="form-control" name="subjectSchedules" id="subjectSchedules" cols="100" rows="10" placeholder="K4011    Lu(m)1:5 Ju(m)1:5                                                                                                                                                                                                                                                            K4051   Lu(n)1:5 Mi(n)1:5                                                                                                                                                                                                                                             K4052   Ma(n)1:5 Ju(n)1:5                                                                                                                                                                                                                                              K4052   Vi(n)1:5 S&aacute;(t)1:5"></textarea>
+                            <a href="/como_cargar_horarios.gif" target="_blank" class="btn btn-default" id="howButton"><i class="fa fa-info-circle"></i> Cómo?</a>
                         </div>
                         <button class="btn btn-default pull-right" type="button" id="addSubject">Agregar materia</button>
                     </div>

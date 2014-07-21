@@ -1,12 +1,14 @@
 var foundAlternativesController = (function() {
 	var foundAlternativesController = {};
 	var alternativeViewList = [];
+	var pickedAlternativesButtonOn = false;
 
 	foundAlternativesController.generateDOM = function() {
 		cleanAlternativeViews();
 		createAlternativeViews();
-		toggleEmptyText();
+		toggleEmptyText(!inscription.alternatives.length);
 		updateBadgeCount();
+		filterIfPickedAlternatives();
 	};
 
 	foundAlternativesController.unpickStarInAlternatives = function(starNumber) {
@@ -16,12 +18,17 @@ var foundAlternativesController = (function() {
 	};
 
 	foundAlternativesController.showOnlyPickedAlternatives = function() {
+		pickedAlternativesButtonOn = true;
+		var hiddenCount = 0;
 		for (var i = 0; i < alternativeViewList.length; i++) {
-			alternativeViewList[i].hideIfNotPicked();
+			var hidden = alternativeViewList[i].hideIfNotPicked();
+			hidden? hiddenCount++ : hiddenCount;
 		};
+		toggleEmptyText(hiddenCount == alternativeViewList.length);
 	};
 
 	foundAlternativesController.showAllAlternatives = function() {
+		pickedAlternativesButtonOn = false;
 		for (var i = 0; i < alternativeViewList.length; i++) {
 			alternativeViewList[i].show();
 		};
@@ -42,15 +49,57 @@ var foundAlternativesController = (function() {
 		}
 	};
 
-	var toggleEmptyText = function() {
+	var toggleEmptyText = function(value) {
 		var emptyText = document.querySelector('#alternatives #noAlternatives') ;
-        emptyText.style.display = inscription.alternatives.length? 'none' : 'block';
+		emptyText.innerText = getEmptyText();
+        emptyText.style.display = value? 'block' : 'none';
+	};
+
+	var getEmptyText = function() {
+		if (!inscription.subjects.length) {
+			return 'Agregá materias para ver las alternativas que se generan.';
+		}
+
+		if (!inscription.alternatives.length) {
+			if (anyFilterIsBeignUsed()) {
+				return 'No se encontraron alternativas para los filtros seleccionados.';
+			}
+			return 'No se encontraron alternativas para los horarios de las materias ingresadas. Verificá que los horarios sean correctos';
+		}
+
+		if (pickedAlternativesButtonOn) {
+			return 'No se encontraron alternativas elegidas. Por favor selecciona una estrella en alguna alternativa';
+		}
+	};
+
+	var anyFilterIsBeignUsed = function() {
+		var filterGroups = [inscription.availableDays, inscription.availableTurns, inscription.availableTurnsInDays];
+		return filterGroups.some(filterGroupIsBeignUsed);
+	};
+	
+	var filterGroupIsBeignUsed = function(filterGroup) {
+		for(var prop in filterGroup){
+			var value = filterGroup[prop];
+			if (typeof value != "boolean") {
+				return filterGroupIsBeignUsed(value);
+			}
+			if (!value) { 
+                return true;
+            }
+		}
+		return false;
 	};
 
 	var updateBadgeCount = function() {
 		var badge = document.getElementById('alternativesBadge');
 		badge.innerText = inscription.alternatives.length;
 		badge.className = inscription.alternatives.length? 'badge' : 'hidden';
+	};
+
+	var filterIfPickedAlternatives = function() {
+		if (pickedAlternativesButtonOn) {
+			foundAlternativesController.showOnlyPickedAlternatives();
+		}
 	};
 
 	return foundAlternativesController;
@@ -145,6 +194,7 @@ var AlternativeView = function(alternative, index) {
 	alternativeView.hideIfNotPicked = function() {
 		if (!alternative.pickedNumber) {
 			viewHtml.style.display = 'none';
+			return true;
 		}
 	};
 

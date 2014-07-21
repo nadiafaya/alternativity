@@ -171,6 +171,7 @@ table th {
 
 .form-group {
     margin-bottom: 15px;
+    position: relative;
 }
 
 .form-group label {
@@ -205,6 +206,17 @@ table th {
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(102, 175, 233, 0.6);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.form-group .placeholder {
+    position: absolute;
+    top: 10px;
+    left: 215px;
+    color: #AAA;
+}
+
+.form-group textarea:focus + .placeholder {
+    display: none;
 }
 
 .form-group input.hasError, .form-group textarea.hasError {
@@ -540,4 +552,14 @@ body .table>tfoot>tr>td {
     border-bottom: 0;
     background: #999;
     color: #FFF;
+}
+
+#howButton {
+    position: absolute;
+    top: 70px;
+    left: 40px;
+    background: #75CAEB;
+    border-color: #4BA1C2;
+    text-transform: none;
+    font-size: 14px;
 }
