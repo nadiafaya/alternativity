@@ -8,6 +8,7 @@ var foundAlternativesController = (function() {
 		createAlternativeViews();
 		toggleEmptyText(!inscription.alternatives.length);
 		updateBadgeCount();
+		togglePickedAlternativesButton();
 		filterIfPickedAlternatives();
 	};
 
@@ -100,6 +101,11 @@ var foundAlternativesController = (function() {
 		if (pickedAlternativesButtonOn) {
 			foundAlternativesController.showOnlyPickedAlternatives();
 		}
+	};
+
+	var togglePickedAlternativesButton = function() {
+		var pickedAlternativesButton = document.querySelector('#showPickedAlternatives')
+		pickedAlternativesButton.style.display = inscription.alternatives.length? 'block' : 'none';
 	};
 
 	return foundAlternativesController;
