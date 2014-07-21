@@ -563,3 +563,14 @@ body .table>tfoot>tr>td {
     text-transform: none;
     font-size: 14px;
 }
+
+#noAlternatives {
+    display: block;
+    text-align: center;
+    background: #999;
+    padding: 15px;
+    border-radius: 4px;
+    color: #FFF;
+    font-size: 16px;
+    margin-top: 50px;
+}
