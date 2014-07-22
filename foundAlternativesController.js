@@ -69,7 +69,7 @@ var foundAlternativesController = (function() {
 		}
 
 		if (pickedAlternativesButtonOn) {
-			return 'No se encontraron alternativas elegidas. Por favor selecciona una estrella en alguna alternativa';
+			return 'No se encontraron alternativas elegidas. Clickea el botón "Mostrar todas" y selecciona una estrella en alguna alternativa';
 		}
 	};
 
@@ -104,7 +104,15 @@ var foundAlternativesController = (function() {
 	};
 
 	var togglePickedAlternativesButton = function() {
-		var pickedAlternativesButton = document.querySelector('#showPickedAlternatives')
+		var pickedAlternativesButton = document.querySelector('#showPickedAlternatives');
+		if (inscription.alternatives.length) {
+			pickedAlternativesButton.style.display = 'block';
+		} else {
+			pickedAlternativesButton.style.display = 'none';
+			if (pickedAlternativesButtonOn) {
+				pickedAlternativesButton.click();
+			}
+		}
 		pickedAlternativesButton.style.display = inscription.alternatives.length? 'block' : 'none';
 	};
 
