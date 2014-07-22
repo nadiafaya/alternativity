@@ -66,7 +66,7 @@ var foundAlternativesController = (function() {
 			if (anyFilterIsBeignUsed()) {
 				return 'No se encontraron alternativas para los filtros seleccionados.';
 			}
-			return 'No se encontraron alternativas para los horarios de las materias ingresadas. Verificá que los horarios sean correctos';
+			return 'No se encontraron alternativas para los horarios de las materias ingresadas. \nVerificá que los horarios sean correctos. \nProbá con deshabilitar los horarios de una materia si queres ver alternativas sin esa materia.';
 		}
 
 		if (pickedAlternativesButtonOn) {

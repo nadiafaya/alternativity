@@ -133,6 +133,16 @@ var inscription = (function() {
             return JSON.stringify(alt1) == JSON.stringify(alt2);
         }
 
+        function removeSubjectsWithNoSchedules () {
+            subjectsToProcess = subjectsToProcess.filter(function(subject) {
+                return subject.schedules.some(function(schedule) {
+                    return schedule.active;
+                });
+            });
+        }
+
+        removeSubjectsWithNoSchedules();
+
         if (subjectsToProcess.length) {
             processNextSubject();
         }
