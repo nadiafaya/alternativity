@@ -33,6 +33,7 @@ var foundAlternativesController = (function() {
 		for (var i = 0; i < alternativeViewList.length; i++) {
 			alternativeViewList[i].show();
 		};
+		toggleEmptyText(false);
 	};
 
 	var cleanAlternativeViews = function() {
