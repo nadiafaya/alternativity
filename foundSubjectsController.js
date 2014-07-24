@@ -47,6 +47,8 @@ var SubjectScheduleTable = function(subject) {
 	var init = function() {
 		cloneTableFromDummy();
 		addSubjectName();
+		attachOnOffOptionalEvents();
+		addSubjectIsOptional();
 		makeTableRows();
 	};
 
@@ -65,10 +67,28 @@ var SubjectScheduleTable = function(subject) {
 		subjectTitle.innerText = subject.name;
 	};
 
+	var attachOnOffOptionalEvents = function() {
+		var optionalSubjectButtonContainer = table.querySelector('.optionalSubject');
+		onOff.attachOnOffSelectorEvents(optionalSubjectButtonContainer, switchSubjectIsOptional);
+	};
+
+	var addSubjectIsOptional = function() {
+		if (subject.isOptional) {
+			var isOptionalButton = table.querySelector('.optionalSubject .on');
+			isOptionalButton.click();
+		}
+	};
+
 	var makeTableRows = function() {
 		for (var i = 0; i < subject.schedules.length; i++) {
 			new SubjectScheduleTableRow(table, subject.schedules[i]);
 		}
+	};
+
+	var switchSubjectIsOptional = function(isOptional) {
+		subject.isOptional = isOptional;
+		inscription.generateAlternatives();
+		foundAlternativesController.generateDOM();
 	};
 
 	this.showTable = function() {
@@ -112,40 +132,18 @@ var SubjectScheduleTableRow = function(table, schedule) {
 	};
 
 	var attachOnOffSelectorEvents = function() {
-		var onOffButtons = row.querySelectorAll('.onOff span');
-		Array.prototype.forEach.call(onOffButtons, function(onOffButton) {
-			onOffButton.addEventListener('click', onOnOffButtonClick);
-		});
+		onOff.attachOnOffSelectorEvents(row, switchScheduleActiveness);
 	};
 
-	function onOnOffButtonClick () {
-		var sibling = this.classList.contains('on')? this.nextElementSibling: this.previousElementSibling;
-		toggleOnOffButton(sibling);
-		toggleOnOffButton(this);
-		switchScheduleActiveness();
-		inscription.generateAlternatives();
-		foundAlternativesController.generateDOM();
-	}
-
-	function toggleOnOffButton (button) {
-		if (button.classList.contains('active')) {
-			button.classList.remove('active');
-			button.classList.add('inactive');
-		} else {
-			button.classList.remove('inactive');
-			button.classList.add('active');
-		}
-	}
-
-	function switchScheduleActiveness () {
-		var onButton = row.querySelector('.onOff .on');
-		var onButtonIsActive = onButton.classList.contains('active');
-		schedule.active = onButtonIsActive;
+	function switchScheduleActiveness (onButtonIsActive) {
 		if (onButtonIsActive) {
 			row.classList.remove('inactive');
 		} else {
 			row.classList.add('inactive');
 		}
+		schedule.active = onButtonIsActive;
+		inscription.generateAlternatives();
+		foundAlternativesController.generateDOM();
 	}
 
 	init();

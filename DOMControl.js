@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 		var subjectName = document.querySelector('#subjectName');
 		var subjectSchedules = document.querySelector('#subjectSchedules');
+		var subjectIsOptional = document.querySelector('#addSubjectForm #subjectOptional .on').classList.contains('active');
 		
 		// Clear errors
 		subjectName.classList.remove('hasError');
@@ -70,7 +71,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		// Add subject
 		var newSubject = new Subject({
 			name: subjectName.value,
-			schedules: subjectSchedules.value
+			schedules: subjectSchedules.value,
+			isOptional: subjectIsOptional
 		});
 
 		// Add to DOM
@@ -90,6 +92,10 @@ document.addEventListener("DOMContentLoaded", function(){
 		var closeButton = document.querySelector('#addSubjectForm .closeModal');
 		closeButton.click();
 	});
+
+	// Attach on/off in add subject form
+	var optionalSubjectButtonContainer = document.querySelector('#addSubjectForm #subjectOptional');
+	onOff.attachOnOffSelectorEvents(optionalSubjectButtonContainer, function() {});
 
 	// Filter turns
 	var turnCheckboxes = document.querySelectorAll('.alternatives .filters.turns input');
@@ -188,3 +194,37 @@ document.addEventListener("DOMContentLoaded", function(){
 		foundAlternativesController.generateDOM();			
 	}
 });
+
+var onOff = (function() {
+	onOff = {};
+
+	var onOffActive = function(button) {
+		return button.classList.contains('active');
+	};
+
+	var toggleOnOffButton = function(button) {
+		if (onOffActive(button)) {
+			button.classList.remove('active');
+			button.classList.add('inactive');
+		} else {
+			button.classList.remove('inactive');
+			button.classList.add('active');
+		}
+	}
+
+	onOff.attachOnOffSelectorEvents = function(onOffContainer, onOnOffChange) {
+		var onOffButtons = onOffContainer.querySelectorAll('.onOff span');
+		Array.prototype.forEach.call(onOffButtons, function(onOffButton) {
+			onOffButton.addEventListener('click', function() {
+				var sibling = this.classList.contains('on')? this.nextElementSibling: this.previousElementSibling;
+				var onButton = this.classList.contains('on')? this : sibling;
+				toggleOnOffButton(this);
+				toggleOnOffButton(sibling);
+				onOnOffChange(onOffActive(onButton));
+			});
+		});
+
+	};
+
+	return onOff;
+})();

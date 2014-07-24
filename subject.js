@@ -27,6 +27,7 @@ var Subject = function (params) {
     subject.shortName = makeShortName();
     subject.color = subjectColors.getColor();
     subject.schedules = [];
+    subject.isOptional = params.isOptional || false;
 
     function parseSchedulesText () {
         var parsedSchedules = schedulesText.match(/\w\d\d\d\d.*/gm);

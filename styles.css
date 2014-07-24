@@ -330,6 +330,45 @@ a.list-group-item:hover {
     text-align: center;
 }
 
+.optionalSubject {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.optionalSubject label {
+    font-weight: bold;
+}
+
+.optionalSubject .onOff span {
+    text-align: center;
+}
+
+.optionalSubject .onOff {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.help .tooltip {
+    display: none;
+    position: absolute;
+    left: 20px;
+    top: 0;
+    width: 200px;
+    background: #EEE;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 13px;
+    z-index: 100;
+}
+
+.help i:hover + .tooltip {
+    display: inline-block;
+}
+
+.help {
+    position: relative;
+}
+
 .viewSchedule {
     border: 1px solid #CCC;
     border-radius: 4px;

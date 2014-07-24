@@ -32,11 +32,21 @@ var inscription = (function() {
 
         function processNextSubject () {
             var currentSubject = subjectsToProcess.pop();
-            for (var i = 0; i < currentSubject.schedules.length; i++) {
-                if(scheduleMeetsFilters(currentSubject.schedules[i])){
+            var optionalRound = currentSubject.isOptional || false;
+            for (var i = 0; i < currentSubject.schedules.length + optionalRound; i++) {
+                var schedule = {
+                    active: true,
+                    days: []
+                };
+                
+                if (i != currentSubject.schedules.length) {
+                    schedule = currentSubject.schedules[i];
+                }
+
+                if(scheduleMeetsFilters(schedule)){
                     currentAlternative.push({
                         subject: currentSubject, 
-                        schedule: currentSubject.schedules[i]
+                        schedule: schedule
                     });
                     if(subjectsToProcess.length){
                         processNextSubject();

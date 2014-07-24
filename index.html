@@ -73,6 +73,14 @@
         		</div>
         		<div class="subjectView">
                     <div class="viewSchedule dummy">
+                        <div class="optionalSubject">
+                            <label for="optionalSubjectOnOff">Materia opcional</label>
+                            <div class="onOff">
+                                <span class="on inactive">SI</span><!--
+                             --><span class="off active">NO</span>
+                            </div>
+                            <span class="help"><i class="fa fa-question-circle"></i> <span class="tooltip">Las materias opcionales son opcionales a la hora de calcular las alternativas. Si una materia es obligatoria, toda alternativa deberá contener si o si a esa materia</span></span>
+                        </div>
                         <h3>Horarios de <span class="subjectTitle"></span></h3>
                         <table class="table table-bordered">
                             <thead>
@@ -123,6 +131,14 @@
                         <div class="form-group">
                             <label class="control-label col-md-2" for="subjectName">Nombre de materia:</label>
                             <input class="form-control" type="text" id="subjectName" placeholder="An&aacute;lisis Matem&aacute;tico I">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="subjectOptional">Materia opcional:</label>
+                            <div id="subjectOptional" class="onOff">
+                                <span class="on inactive">SI</span><!--
+                             --><span class="off active">NO</span>
+                            </div>
+                            <span class="help"><i class="fa fa-question-circle"></i> <span class="tooltip">Las materias opcionales son opcionales a la hora de calcular las alternativas. Si una materia es obligatoria, toda alternativa deberá contener si o si a esa materia</span></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2" for="subjectSchedules">Horarios de materia:<span class="clarification">(colocar cada horario en una nueva línea)</span></label>
