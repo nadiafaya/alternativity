@@ -222,6 +222,7 @@ var SubjectListItem = function(foundSubject) {
 			subjectItemList.appendChild(emptyText);
 		}
 		foundSubjectsController.removeFromList(foundSubject);
+		foundSubjectsController.unSelectListItems();
 		foundSubjectsController.selectFirstSubject();
 	};
 
