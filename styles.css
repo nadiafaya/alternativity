@@ -227,6 +227,12 @@ table th {
     height: 150px;
 }
 
+.errorMessages {
+    color: #F00;
+    text-align: right;
+    margin-right: 30px;
+}
+
 .btn-default {
     color: #555;
     background-color: #EEE;

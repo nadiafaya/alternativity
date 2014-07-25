@@ -51,11 +51,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
 		var subjectName = document.querySelector('#subjectName');
 		var subjectSchedules = document.querySelector('#subjectSchedules');
+		var errorMessages = document.querySelector('.errorMessages');
 		var subjectIsOptional = document.querySelector('#addSubjectForm #subjectOptional .on').classList.contains('active');
 		
 		// Clear errors
 		subjectName.classList.remove('hasError');
 		subjectSchedules.classList.remove('hasError');
+		errorMessages.innerText = '';
 
 		// Validate empty fields
 		if (!subjectName.value) {
@@ -74,6 +76,13 @@ document.addEventListener("DOMContentLoaded", function(){
 			schedules: subjectSchedules.value,
 			isOptional: subjectIsOptional
 		});
+
+		// Check for errors
+		if (newSubject.errorLog) {
+			subjectSchedules.classList.add('hasError');
+			errorMessages.innerText = newSubject.errorLog;
+			return;
+		};
 
 		// Add to DOM
 		foundSubjectsController.addSubject(newSubject);

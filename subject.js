@@ -28,23 +28,40 @@ var Subject = function (params) {
     subject.color = subjectColors.getColor();
     subject.schedules = [];
     subject.isOptional = params.isOptional || false;
+    subject.errorLog = "";
 
     function parseSchedulesText () {
-        var parsedSchedules = schedulesText.match(/\w\d\d\d\d.*/gm);
-        for (var i = 0; i < parsedSchedules.length; i++) {
+        var lines = schedulesText.match(/.+/gm);
+        if (!lines || !lines.length) {
+            logError("No se pudo encontrar ningún horario. Ingresá los horarios en el campo 'Horarios de materia'");
+            return;
+        } 
+        for (var i = 0; i < lines.length; i++) {
             var schedule = new Schedule();
-            var parsedDays = parsedSchedules[i].match(/(Lu|Ma|Mi|Ju|Vi|Sa)\((m|t|n)\)/g); // Lu(m)
+            var parsedDays = lines[i].match(/(Lu|Ma|Mi|Ju|Vi|Sa)\s*\((m|t|n)\)/g); // Lu(m)
+            if (!parsedDays || !parsedDays.length) {
+                logError();
+                return;
+            }
             for (var j = 0; j < parsedDays.length; j++) {
-                var dayName = parsedDays[j].match(/Lu|Ma|Mi|Ju|Vi|Sa/g)[0];
-                var dayTurn = parsedDays[j].match(/m|t|n/g)[0];
+                var dayName = parsedDays[j].match(/Lu|Ma|Mi|Ju|Vi|Sa/g);
+                var dayTurn = parsedDays[j].match(/m|t|n/g);
+                if (!dayName || !dayName.length || !dayTurn || !dayTurn.length) {
+                    logError();
+                    return;
+                };
                 var day = new Day({
-                    name: dayName,
-                    turn: dayTurn
+                    name: dayName[0],
+                    turn: dayTurn[0]
                 });
                 schedule.days.push(day);
             }
             subject.schedules.push(schedule);
         }
+    }
+
+    function logError (message) {
+        subject.errorLog = message || "Hubo un error al leer los horarios. Ingresá los horarios con la forma 'Lu(n) 0:5'";
     }
 
     function cleanAccents (text) {
