@@ -309,6 +309,17 @@ a.list-group-item:hover {
     background-color: #F5F5F5;
 }
 
+a.list-group-item .optionalText {
+    color: #999;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+a.list-group-item.active .optionalText, 
+a.list-group-item.active:hover .optionalText {
+    color: #FFF;
+}
+
 .subjectList .btn {
     width: 100%;
     margin-top: 10px;

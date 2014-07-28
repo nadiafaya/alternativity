@@ -36,12 +36,12 @@ var foundSubjectsController = (function() {
 
 var FoundSubject = function(subject) {
 	this.subject = subject;
-	this.subjectScheduleTable = new SubjectScheduleTable(subject);
+	this.subjectScheduleTable = new SubjectScheduleTable(this);
 	this.subjectListItem = new SubjectListItem(this);
 };
 
-var SubjectScheduleTable = function(subject) {
-	subject = subject || new Subject();
+var SubjectScheduleTable = function(foundSubject) {
+	subject = foundSubject.subject || new Subject();
 	var table = {};
 
 	var init = function() {
@@ -87,6 +87,7 @@ var SubjectScheduleTable = function(subject) {
 
 	var switchSubjectIsOptional = function(isOptional) {
 		subject.isOptional = isOptional;
+		foundSubject.subjectListItem.toggleOptional(isOptional);
 		inscription.generateAlternatives();
 		foundAlternativesController.generateDOM();
 	};
@@ -167,6 +168,11 @@ var SubjectListItem = function(foundSubject) {
 		listItem.classList.add('list-group-item');
 		listItem.setAttribute('href', 'javascript: void(0)');
 		listItem.innerText = foundSubject.subject.name;
+		var optionalText = document.createElement('span')
+		optionalText.innerText = '(opcional)';
+		optionalText.className = 'optionalText';
+		listItem.appendChild(optionalText);
+		optionalText.style.display = foundSubject.subject.isOptional? 'inline-block' : 'none';
 		var subjectItemList = document.querySelector('.subjectList .list-group');
 		subjectItemList.appendChild(listItem);
 		var emptyText = subjectItemList.querySelector('.empty-text');
@@ -237,6 +243,11 @@ var SubjectListItem = function(foundSubject) {
 
 	subjectListItem.unselect = function() {
 		listItem.classList.remove('active');
+	};
+
+	subjectListItem.toggleOptional = function(isOptional) {
+		var optionalText = listItem.querySelector('.optionalText');
+		optionalText.style.display = isOptional? 'inline-block' : 'none';
 	};
 
 	init();
