@@ -18,308 +18,318 @@
     </script>
 </head>
 <body>
-    <div class="navbar">
-        <div class="navbar-container">
-            <div class="navbar-first-row">
-                <button type="button" class="navbar-menu-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Alternativity</a>
-                <div class="navbar-description">
-                    Bienvenido! El objetivo de esta paginola es ayudarte a visualizar las alternativas de horarios de tus materias para la preinscripci&oacute;n de la UTN.&#8196;Solamente ten&eacute;s que agregar tus materias y listo!
+    <div class="mainBody">
+        <div class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-first-row">
+                    <button type="button" class="navbar-menu-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Alternativity</a>
+                    <div class="navbar-description">
+                        Bienvenido! El objetivo de esta paginola es ayudarte a visualizar las alternativas de horarios de tus materias para la preinscripci&oacute;n de la UTN.&#8196;Solamente ten&eacute;s que agregar tus materias y listo!
+                    </div>
                 </div>
-            </div>
-            <div class="navbar-second-row">
-                <div class="navbar-button active" data-page="#instructions">Instrucciones</div>
-                <div class="navbar-button" data-page="#subjects">Materias</div>
-                <div class="navbar-button" data-page="#alternatives">Alternativas <span id="alternativesBadge"></span></div>
+                <div class="navbar-second-row">
+                    <div class="navbar-button active" data-page="#instructions">Instrucciones</div>
+                    <div class="navbar-button" data-page="#subjects">Materias</div>
+                    <div class="navbar-button" data-page="#alternatives">Alternativas <span id="alternativesBadge"></span></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container">
-    	<div class="page active" id="instructions">
-            <h1>Instrucciones</h1>
-            <div class="instructionPanelRow">
-                <div class="panel panel-default">
-                    <h4>1. &ensp;Agregá tus materias</h4>
-                    <i class="fa fa-plus fa-5x"></i>
-                    <p>Agregá las materias que querés hacer este cuatrimestre y sus horarios, copiándolos de la página del SIGA</p>
+        <div class="container">
+        	<div class="page active" id="instructions">
+                <h1>Instrucciones</h1>
+                <div class="instructionPanelRow">
+                    <div class="panel panel-default">
+                        <h4>1. &ensp;Agregá tus materias</h4>
+                        <i class="fa fa-plus fa-5x"></i>
+                        <p>Agregá las materias que querés hacer este cuatrimestre y sus horarios, copiándolos de la página del SIGA</p>
+                    </div>
+                    <div class="panel panel-default">
+                        <h4>2. &ensp;Filtrá los horarios</h4>
+                        <i class="fa fa-filter fa-5x"></i>
+                        <p>Filtrá los horarios disponibles para mostrar sólo las alternativas que son más cómodas</p>
+                        <br>
+                    </div>
+                    <div class="panel panel-default">
+                        <h4>3. &ensp;Elegí tus tres alternativas</h4>
+                        <i class="fa fa-check fa-5x"></i><i class="fa fa-check fa-5x"></i><i class="fa fa-check fa-5x"></i>
+                        <p>Finalmente elegí tus tres alternativas finales de entre todas las posibles</p>
+                        <br>
+                    </div>            
                 </div>
-                <div class="panel panel-default">
-                    <h4>2. &ensp;Filtrá los horarios</h4>
-                    <i class="fa fa-filter fa-5x"></i>
-                    <p>Filtrá los horarios disponibles para mostrar sólo las alternativas que son más cómodas</p>
-                    <br>
-                </div>
-                <div class="panel panel-default">
-                    <h4>3. &ensp;Elegí tus tres alternativas</h4>
-                    <i class="fa fa-check fa-5x"></i><i class="fa fa-check fa-5x"></i><i class="fa fa-check fa-5x"></i>
-                    <p>Finalmente elegí tus tres alternativas finales de entre todas las posibles</p>
-                    <br>
-                </div>            
             </div>
-        </div>
 
-        <div id="subjects" class="page">
-            <h1>Materias</h1>
-        	<div class="subjects">
-        		<div class="subjectList">
-        			<div class="list-group">
-                        <div class="empty-text">No hay materias</div>
-                    </div>
-                    <button type="button" class="btn btn-default triggerModal" data-modal="#addSubjectForm">Agregar materia</button>
-        		</div>
-        		<div class="subjectView">
-                    <div class="viewSchedule dummy">
-                        <div class="optionalSubject">
-                            <label for="optionalSubjectOnOff">Materia opcional</label>
-                            <div class="onOff">
-                                <span class="on inactive">SI</span><!--
-                             --><span class="off active">NO</span>
-                            </div>
-                            <span class="help"><i class="fa fa-question-circle"></i> <span class="tooltip">Las materias opcionales son opcionales a la hora de calcular las alternativas. Si una materia es obligatoria, toda alternativa deberá contener si o si a esa materia</span></span>
+            <div id="subjects" class="page">
+                <h1>Materias</h1>
+            	<div class="subjects">
+            		<div class="subjectList">
+            			<div class="list-group">
+                            <div class="empty-text">No hay materias</div>
                         </div>
-                        <h3>Horarios de <span class="subjectTitle"></span></h3>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Lunes</th>
-                                    <th>Martes</th>
-                                    <th>Mi&eacute;rcoles</th>
-                                    <th>Jueves</th>
-                                    <th>Viernes</th>
-                                    <th>S&aacute;bado</th>
-                                    <th>Horario habilitado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="subjectSchedulesView">
-                                    <td class="Lu"></td>
-                                    <td class="Ma"></td>
-                                    <td class="Mi"></td>
-                                    <td class="Ju"></td>
-                                    <td class="Vi"></td>
-                                    <td class="Sa"></td>
-                                    <td class="activatedSchedule">
-                                        <div class="onOff" title="Ignorar este horario para calcular las alternativas">
-                                            <span class="on active">ON</span><!--
-                                         --><span class="off inactive">OFF</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-            			</table>
+                        <button type="button" class="btn btn-default triggerModal" data-modal="#addSubjectForm">Agregar materia</button>
+            		</div>
+            		<div class="subjectView">
+                        <div class="viewSchedule dummy">
+                            <div class="optionalSubject">
+                                <label for="optionalSubjectOnOff">Materia opcional</label>
+                                <div class="onOff">
+                                    <span class="on inactive">SI</span><!--
+                                 --><span class="off active">NO</span>
+                                </div>
+                                <span class="help"><i class="fa fa-question-circle"></i> <span class="tooltip">Las materias opcionales son opcionales a la hora de calcular las alternativas. Si una materia es obligatoria, toda alternativa deberá contener si o si a esa materia</span></span>
+                            </div>
+                            <h3>Horarios de <span class="subjectTitle"></span></h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Lunes</th>
+                                        <th>Martes</th>
+                                        <th>Mi&eacute;rcoles</th>
+                                        <th>Jueves</th>
+                                        <th>Viernes</th>
+                                        <th>S&aacute;bado</th>
+                                        <th>Horario habilitado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="subjectSchedulesView">
+                                        <td class="Lu"></td>
+                                        <td class="Ma"></td>
+                                        <td class="Mi"></td>
+                                        <td class="Ju"></td>
+                                        <td class="Vi"></td>
+                                        <td class="Sa"></td>
+                                        <td class="activatedSchedule">
+                                            <div class="onOff" title="Ignorar este horario para calcular las alternativas">
+                                                <span class="on active">ON</span><!--
+                                             --><span class="off inactive">OFF</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                			</table>
+                        </div>
+            		</div>
+            	</div>
+            </div>
+            <div id="addSubjectForm" class="modal-container">
+                <div class="modal-overlay"></div>
+                <div class="modal">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                Agregar materia
+                                <span data-modal="#addSubjectForm" class="closeModal pull-right">
+                                    <i class="fa fa-times"></i>
+                                </span>
+                            </h4>
+                        </div>
+                        <div class="panel-body closablePanel form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="subjectName">Nombre de materia:</label>
+                                <input class="form-control" type="text" id="subjectName" placeholder="An&aacute;lisis Matem&aacute;tico I">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="subjectOptional">Materia opcional:</label>
+                                <div id="subjectOptional" class="onOff">
+                                    <span class="on inactive">SI</span><!--
+                                 --><span class="off active">NO</span>
+                                </div>
+                                <span class="help"><i class="fa fa-question-circle"></i> <span class="tooltip">Las materias opcionales son opcionales a la hora de calcular las alternativas. Si una materia es obligatoria, toda alternativa deberá contener si o si a esa materia</span></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="subjectSchedules">Horarios de materia:<span class="clarification">(colocar cada horario en una nueva línea)</span></label>
+                                <textarea class="form-control" name="subjectSchedules" id="subjectSchedules" cols="100" rows="10" placeholder="K4011    Lu(m)1:5 Ju(m)1:5                                                                                                                                                                                                                                                            K4051   Lu(n)1:5 Mi(n)1:5                                                                                                                                                                                                                                             K4052   Ma(n)1:5 Ju(n)1:5                                                                                                                                                                                                                                              K4052   Vi(n)1:5 S&aacute;(t)1:5"></textarea>
+                                <div class="errorMessages"></div>
+                                <a href="/alternativity/como_cargar_horarios.gif" target="_blank" class="btn btn-default" id="howButton"><i class="fa fa-info-circle"></i> Cómo?</a>
+                            </div>
+                            <button class="btn btn-default pull-right" type="button" id="addSubject">Agregar materia</button>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+        	<div id="alternatives" class="page alternatives">
+                <h1>Alternativas</h1>
+        		<div class="alternativesViewing">
+                    <strong>Filtros</strong>
+                    <div class="filterBox">
+                        <div id="globalFilters">
+                            <div class="filters days">
+                                <span>Filtrar días:</span>
+                                <label for="Lu">Lunes</label>
+                                <input type="checkbox" id="Lu" checked="checked" />
+                                <label for="Ma">Martes</label>
+                                <input type="checkbox" id="Ma" checked="checked" />
+                                <label for="Mi">Mi&eacute;rcoles</label>
+                                <input type="checkbox" id="Mi" checked="checked" />
+                                <label for="Ju">Jueves</label>
+                                <input type="checkbox" id="Ju" checked="checked" />
+                                <label for="Vi">Viernes</label>
+                                <input type="checkbox" id="Vi" checked="checked" />
+                                <label for="Sa">S&aacute;bado</label>
+                                <input type="checkbox" id="Sa" checked="checked" />
+                            </div>
+                            <div class="filters turns">
+                                <span>Filtrar turno:</span>
+                                <label for="m">Ma&ntilde;ana</label>
+                                <input type="checkbox" id="m" checked="checked" />
+                                <label for="t">Tarde</label>
+                                <input type="checkbox" id="t" checked="checked" />
+                                <label for="n">Noche</label>
+                                <input type="checkbox" id="n" checked="checked" />
+                            </div>
+                        </div>
+                        <div id="advancedFilters" class="hidden">
+                            <div class="daysAndTurns filters">
+                                <div class="checkboxes">
+                                    <div class="checkboxLabel">Lunes</div>
+                                    <div id="LuFilter">
+                                        <span>Ma&ntilde;ana</span>
+                                        <input id="Lu-m" data-day="Lu" data-turn="m" type="checkbox" checked="checked" />
+                                        <span>Tarde</span>
+                                        <input id="Lu-t" data-day="Lu" data-turn="t" type="checkbox" checked="checked" />
+                                        <span>Noche</span>
+                                        <input id="Lu-n" data-day="Lu" data-turn="n" type="checkbox" checked="checked" />
+                                    </div>
+                                </div>
+                                <div class="checkboxes">
+                                    <div class="checkboxLabel">Martes</div>
+                                    <div id="MaFilter">
+                                        <span>Ma&ntilde;ana</span>
+                                        <input id="Ma-m" data-day="Ma" data-turn="m" type="checkbox" checked="checked" />
+                                        <span>Tarde</span>
+                                        <input id="Ma-t" data-day="Ma" data-turn="t" type="checkbox" checked="checked" />
+                                        <span>Noche</span>
+                                        <input id="Ma-n" data-day="Ma" data-turn="n" type="checkbox" checked="checked" />
+                                    </div>
+                                </div>
+                                <div class="checkboxes">
+                                    <div class="checkboxLabel">Mi&eacute;rcoles</div>
+                                    <div id="MiFilter">
+                                        <span>Ma&ntilde;ana</span>
+                                        <input id="Mi-m" data-day="Mi" data-turn="m" type="checkbox" checked="checked" />
+                                        <span>Tarde</span>
+                                        <input id="Mi-t" data-day="Mi" data-turn="t" type="checkbox" checked="checked" />
+                                        <span>Noche</span>
+                                        <input id="Mi-n" data-day="Mi" data-turn="n" type="checkbox" checked="checked" />
+                                    </div>
+                                </div>
+                                <div class="checkboxes">
+                                    <div class="checkboxLabel">Jueves</div>
+                                    <div id="JuFilter">
+                                        <span>Ma&ntilde;ana</span>
+                                        <input id="Ju-m" data-day="Ju" data-turn="m" type="checkbox" checked="checked" />
+                                        <span>Tarde</span>
+                                        <input id="Ju-t" data-day="Ju" data-turn="t" type="checkbox" checked="checked" />
+                                        <span>Noche</span>
+                                        <input id="Ju-n" data-day="Ju" data-turn="n" type="checkbox" checked="checked" />
+                                    </div>
+                                </div>
+                                <div class="checkboxes">
+                                    <div class="checkboxLabel">Viernes</div>
+                                    <div id="ViFilter">
+                                        <span>Ma&ntilde;ana</span>
+                                        <input id="Vi-m" data-day="Vi" data-turn="m" type="checkbox" checked="checked" />
+                                        <span>Tarde</span>
+                                        <input id="Vi-t" data-day="Vi" data-turn="t" type="checkbox" checked="checked" />
+                                        <span>Noche</span>
+                                        <input id="Vi-n" data-day="Vi" data-turn="n" type="checkbox" checked="checked" />
+                                    </div>
+                                </div>
+                                <div class="checkboxes">
+                                    <div class="checkboxLabel">S&aacute;bado</div>
+                                    <div id="SaFilter">
+                                        <span>Ma&ntilde;ana</span>
+                                        <input id="Sa-m" data-day="Sa" data-turn="m" type="checkbox" checked="checked" />
+                                        <span>Tarde</span>
+                                        <input id="Sa-t" data-day="Sa" data-turn="t" type="checkbox" checked="checked" />
+                                        <span>Noche</span>
+                                        <input id="Sa-n" data-day="Sa" data-turn="n" type="checkbox" checked="checked" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a id="switchGlobalAndAdvancedFilters" data-backuptext="« Filtro básico" href="javascript:void(0)">Filtro avanzado »</a>
+                    <button id="showPickedAlternatives" type="button" class="btn btn-default">Mostrar solo las elegidas</button>
+                    <div class="alternativesViews">
+            			<div id="noAlternatives">No se encontraron alternativas</div>
+                        <div class="dummy">
+            				<div class="alternativeHeader">
+                                <h4>Alternativa </h4>
+                                <div class="pickAlternativeStars">
+                                    <div class="star" data-starnumber="1">
+                                        <i class="fa fa-star-o fa-2x"></i><span>1</span>
+                                    </div>
+                                    <div class="star" data-starnumber="2">
+                                        <i class="fa fa-star-o fa-2x"></i><span>2</span>
+                                    </div>
+                                    <div class="star" data-starnumber="3">
+                                        <i class="fa fa-star-o fa-2x"></i><span>3</span>
+                                    </div>
+                                </div>
+                            </div>
+
+            				<table class="table table-bordered">
+                                <thead>
+                	                <tr>
+                	                	<th>Turno</th>
+                	                    <th>Lunes</th>
+                	                    <th>Martes</th>
+                	                    <th>Mi&eacute;rcoles</th>
+                	                    <th>Jueves</th>
+                	                    <th>Viernes</th>
+                	                    <th>S&aacute;bado</th>
+                	                </tr>
+                                </thead>
+                                <tbody>
+                	                <tr rel="m">
+                	                	<td>ma&ntilde;ana</td>
+                	                    <td class="day Lu"></td>
+                	                    <td class="day Ma"></td>
+                	                    <td class="day Mi"></td>
+                	                    <td class="day Ju"></td>
+                	                    <td class="day Vi"></td>
+                	                    <td class="day Sa"></td>
+                	                </tr>
+                	                <tr rel="t">
+                	                	<td>tarde</td>
+                	                    <td class="day Lu"></td>
+                	                    <td class="day Ma"></td>
+                	                    <td class="day Mi"></td>
+                	                    <td class="day Ju"></td>
+                	                    <td class="day Vi"></td>
+                	                    <td class="day Sa"></td>
+                	                </tr>
+                	                <tr rel="n">
+                	                	<td>noche</td>
+                	                    <td class="day Lu"></td>
+                	                    <td class="day Ma"></td>
+                	                    <td class="day Mi"></td>
+                	                    <td class="day Ju"></td>
+                	                    <td class="day Vi"></td>
+                	                    <td class="day Sa"></td>
+                	                </tr>
+                                </tbody>
+            				</table>
+                        </div>
+        			</div>
         		</div>
         	</div>
         </div>
-        <div id="addSubjectForm" class="modal-container">
-            <div class="modal-overlay"></div>
-            <div class="modal">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            Agregar materia
-                            <span data-modal="#addSubjectForm" class="closeModal pull-right">
-                                <i class="fa fa-times"></i>
-                            </span>
-                        </h4>
-                    </div>
-                    <div class="panel-body closablePanel form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="subjectName">Nombre de materia:</label>
-                            <input class="form-control" type="text" id="subjectName" placeholder="An&aacute;lisis Matem&aacute;tico I">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="subjectOptional">Materia opcional:</label>
-                            <div id="subjectOptional" class="onOff">
-                                <span class="on inactive">SI</span><!--
-                             --><span class="off active">NO</span>
-                            </div>
-                            <span class="help"><i class="fa fa-question-circle"></i> <span class="tooltip">Las materias opcionales son opcionales a la hora de calcular las alternativas. Si una materia es obligatoria, toda alternativa deberá contener si o si a esa materia</span></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2" for="subjectSchedules">Horarios de materia:<span class="clarification">(colocar cada horario en una nueva línea)</span></label>
-                            <textarea class="form-control" name="subjectSchedules" id="subjectSchedules" cols="100" rows="10" placeholder="K4011    Lu(m)1:5 Ju(m)1:5                                                                                                                                                                                                                                                            K4051   Lu(n)1:5 Mi(n)1:5                                                                                                                                                                                                                                             K4052   Ma(n)1:5 Ju(n)1:5                                                                                                                                                                                                                                              K4052   Vi(n)1:5 S&aacute;(t)1:5"></textarea>
-                            <div class="errorMessages"></div>
-                            <a href="/alternativity/como_cargar_horarios.gif" target="_blank" class="btn btn-default" id="howButton"><i class="fa fa-info-circle"></i> Cómo?</a>
-                        </div>
-                        <button class="btn btn-default pull-right" type="button" id="addSubject">Agregar materia</button>
-                    </div>
-                </div>
-            </div>
+    </div>
+    <div class="footer">
+        <div class="footer-left">
+            Encontraste un error? Reportá un <a target="_blank" href="https://github.com/nadiafaya/alternativity/issues">issue</a>
         </div>
-
-    	<div id="alternatives" class="page alternatives">
-            <h1>Alternativas</h1>
-    		<div class="alternativesViewing">
-                <strong>Filtros</strong>
-                <div class="filterBox">
-                    <div id="globalFilters">
-                        <div class="filters days">
-                            <span>Filtrar días:</span>
-                            <label for="Lu">Lunes</label>
-                            <input type="checkbox" id="Lu" checked="checked" />
-                            <label for="Ma">Martes</label>
-                            <input type="checkbox" id="Ma" checked="checked" />
-                            <label for="Mi">Mi&eacute;rcoles</label>
-                            <input type="checkbox" id="Mi" checked="checked" />
-                            <label for="Ju">Jueves</label>
-                            <input type="checkbox" id="Ju" checked="checked" />
-                            <label for="Vi">Viernes</label>
-                            <input type="checkbox" id="Vi" checked="checked" />
-                            <label for="Sa">S&aacute;bado</label>
-                            <input type="checkbox" id="Sa" checked="checked" />
-                        </div>
-                        <div class="filters turns">
-                            <span>Filtrar turno:</span>
-                            <label for="m">Ma&ntilde;ana</label>
-                            <input type="checkbox" id="m" checked="checked" />
-                            <label for="t">Tarde</label>
-                            <input type="checkbox" id="t" checked="checked" />
-                            <label for="n">Noche</label>
-                            <input type="checkbox" id="n" checked="checked" />
-                        </div>
-                    </div>
-                    <div id="advancedFilters" class="hidden">
-                        <div class="daysAndTurns filters">
-                            <div class="checkboxes">
-                                <div class="checkboxLabel">Lunes</div>
-                                <div id="LuFilter">
-                                    <span>Ma&ntilde;ana</span>
-                                    <input id="Lu-m" data-day="Lu" data-turn="m" type="checkbox" checked="checked" />
-                                    <span>Tarde</span>
-                                    <input id="Lu-t" data-day="Lu" data-turn="t" type="checkbox" checked="checked" />
-                                    <span>Noche</span>
-                                    <input id="Lu-n" data-day="Lu" data-turn="n" type="checkbox" checked="checked" />
-                                </div>
-                            </div>
-                            <div class="checkboxes">
-                                <div class="checkboxLabel">Martes</div>
-                                <div id="MaFilter">
-                                    <span>Ma&ntilde;ana</span>
-                                    <input id="Ma-m" data-day="Ma" data-turn="m" type="checkbox" checked="checked" />
-                                    <span>Tarde</span>
-                                    <input id="Ma-t" data-day="Ma" data-turn="t" type="checkbox" checked="checked" />
-                                    <span>Noche</span>
-                                    <input id="Ma-n" data-day="Ma" data-turn="n" type="checkbox" checked="checked" />
-                                </div>
-                            </div>
-                            <div class="checkboxes">
-                                <div class="checkboxLabel">Mi&eacute;rcoles</div>
-                                <div id="MiFilter">
-                                    <span>Ma&ntilde;ana</span>
-                                    <input id="Mi-m" data-day="Mi" data-turn="m" type="checkbox" checked="checked" />
-                                    <span>Tarde</span>
-                                    <input id="Mi-t" data-day="Mi" data-turn="t" type="checkbox" checked="checked" />
-                                    <span>Noche</span>
-                                    <input id="Mi-n" data-day="Mi" data-turn="n" type="checkbox" checked="checked" />
-                                </div>
-                            </div>
-                            <div class="checkboxes">
-                                <div class="checkboxLabel">Jueves</div>
-                                <div id="JuFilter">
-                                    <span>Ma&ntilde;ana</span>
-                                    <input id="Ju-m" data-day="Ju" data-turn="m" type="checkbox" checked="checked" />
-                                    <span>Tarde</span>
-                                    <input id="Ju-t" data-day="Ju" data-turn="t" type="checkbox" checked="checked" />
-                                    <span>Noche</span>
-                                    <input id="Ju-n" data-day="Ju" data-turn="n" type="checkbox" checked="checked" />
-                                </div>
-                            </div>
-                            <div class="checkboxes">
-                                <div class="checkboxLabel">Viernes</div>
-                                <div id="ViFilter">
-                                    <span>Ma&ntilde;ana</span>
-                                    <input id="Vi-m" data-day="Vi" data-turn="m" type="checkbox" checked="checked" />
-                                    <span>Tarde</span>
-                                    <input id="Vi-t" data-day="Vi" data-turn="t" type="checkbox" checked="checked" />
-                                    <span>Noche</span>
-                                    <input id="Vi-n" data-day="Vi" data-turn="n" type="checkbox" checked="checked" />
-                                </div>
-                            </div>
-                            <div class="checkboxes">
-                                <div class="checkboxLabel">S&aacute;bado</div>
-                                <div id="SaFilter">
-                                    <span>Ma&ntilde;ana</span>
-                                    <input id="Sa-m" data-day="Sa" data-turn="m" type="checkbox" checked="checked" />
-                                    <span>Tarde</span>
-                                    <input id="Sa-t" data-day="Sa" data-turn="t" type="checkbox" checked="checked" />
-                                    <span>Noche</span>
-                                    <input id="Sa-n" data-day="Sa" data-turn="n" type="checkbox" checked="checked" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a id="switchGlobalAndAdvancedFilters" data-backuptext="« Filtro básico" href="javascript:void(0)">Filtro avanzado »</a>
-                <button id="showPickedAlternatives" type="button" class="btn btn-default">Mostrar solo las elegidas</button>
-                <div class="alternativesViews">
-        			<div id="noAlternatives">No se encontraron alternativas</div>
-                    <div class="dummy">
-        				<div class="alternativeHeader">
-                            <h4>Alternativa </h4>
-                            <div class="pickAlternativeStars">
-                                <div class="star" data-starnumber="1">
-                                    <i class="fa fa-star-o fa-2x"></i><span>1</span>
-                                </div>
-                                <div class="star" data-starnumber="2">
-                                    <i class="fa fa-star-o fa-2x"></i><span>2</span>
-                                </div>
-                                <div class="star" data-starnumber="3">
-                                    <i class="fa fa-star-o fa-2x"></i><span>3</span>
-                                </div>
-                            </div>
-                        </div>
-
-        				<table class="table table-bordered">
-                            <thead>
-            	                <tr>
-            	                	<th>Turno</th>
-            	                    <th>Lunes</th>
-            	                    <th>Martes</th>
-            	                    <th>Mi&eacute;rcoles</th>
-            	                    <th>Jueves</th>
-            	                    <th>Viernes</th>
-            	                    <th>S&aacute;bado</th>
-            	                </tr>
-                            </thead>
-                            <tbody>
-            	                <tr rel="m">
-            	                	<td>ma&ntilde;ana</td>
-            	                    <td class="day Lu"></td>
-            	                    <td class="day Ma"></td>
-            	                    <td class="day Mi"></td>
-            	                    <td class="day Ju"></td>
-            	                    <td class="day Vi"></td>
-            	                    <td class="day Sa"></td>
-            	                </tr>
-            	                <tr rel="t">
-            	                	<td>tarde</td>
-            	                    <td class="day Lu"></td>
-            	                    <td class="day Ma"></td>
-            	                    <td class="day Mi"></td>
-            	                    <td class="day Ju"></td>
-            	                    <td class="day Vi"></td>
-            	                    <td class="day Sa"></td>
-            	                </tr>
-            	                <tr rel="n">
-            	                	<td>noche</td>
-            	                    <td class="day Lu"></td>
-            	                    <td class="day Ma"></td>
-            	                    <td class="day Mi"></td>
-            	                    <td class="day Ju"></td>
-            	                    <td class="day Vi"></td>
-            	                    <td class="day Sa"></td>
-            	                </tr>
-                            </tbody>
-        				</table>
-                    </div>
-    			</div>
-    		</div>
-    	</div>
+        <div class="footer-right">
+            Made with <span><i class="fa fa-heart"></i></span> by Nadia
+        </div>
     </div>
     <!--[if IE]>
     <script type="text/javascript" src="classlist.js"></script>

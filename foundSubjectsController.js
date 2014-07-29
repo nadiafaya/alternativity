@@ -35,13 +35,15 @@ var foundSubjectsController = (function() {
 })();
 
 var FoundSubject = function(subject) {
-	this.subject = subject;
-	this.subjectScheduleTable = new SubjectScheduleTable(this);
-	this.subjectListItem = new SubjectListItem(this);
+	var foundSubject = {};
+	foundSubject.subject = subject;
+	foundSubject.subjectScheduleTable = new SubjectScheduleTable(foundSubject);
+	foundSubject.subjectListItem = new SubjectListItem(foundSubject);
+	return foundSubject;
 };
 
 var SubjectScheduleTable = function(foundSubject) {
-	subject = foundSubject.subject || new Subject();
+	var subject = foundSubject.subject || new Subject();
 	var table = {};
 
 	var init = function() {
@@ -74,8 +76,12 @@ var SubjectScheduleTable = function(foundSubject) {
 
 	var addSubjectIsOptional = function() {
 		if (subject.isOptional) {
-			var isOptionalButton = table.querySelector('.optionalSubject .on');
-			isOptionalButton.click();
+			var onButton = table.querySelector('.optionalSubject .on');
+			onButton.classList.remove('inactive');
+			onButton.classList.add('active');
+			var offButton = table.querySelector('.optionalSubject .off');
+			offButton.classList.remove('active');
+			offButton.classList.add('inactive');
 		}
 	};
 

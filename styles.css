@@ -10,8 +10,18 @@ a {
     text-decoration: none;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
+    height: 100%;
+}
+
+.mainBody {
+    background: #FFF;
+    min-height: calc(100% - 100px);
 }
 
 .navbar {
@@ -80,7 +90,7 @@ body {
 }
 
 .container {
-    margin: 0 auto 100px auto;
+    margin: 0 auto 0 auto;
     width: 1170px;
     font-size: 14px;
 }
@@ -629,4 +639,19 @@ body .table>tfoot>tr>td {
     color: #FFF;
     font-size: 16px;
     margin-top: 50px;
+}
+
+.footer {
+    width: calc(100% - 200px);
+    background: #CCC;
+    padding: 40px 100px;
+    overflow: hidden;
+}
+
+.footer .footer-left {
+    float: left;
+}
+
+.footer .footer-right {
+    float: right;
 }
