@@ -96,6 +96,7 @@ var SubjectScheduleTable = function(foundSubject) {
 		foundSubject.subjectListItem.toggleOptional(isOptional);
 		inscription.generateAlternatives();
 		foundAlternativesController.generateDOM();
+		inscription.persistSubjects();
 	};
 
 	this.showTable = function() {
