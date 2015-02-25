@@ -66,14 +66,20 @@ var Subject = function (params) {
 
     function cleanAccents (text) {
         if (text) {
-            return text.replace(/\u00E1/g, 'a')
+            return fixSIGAsBadAccents(text)
+                .replace(/\u00E1/g, 'a')
                 .replace(/\u00E9/g, 'e')
                 .replace(/\u00ED/g, 'i')
                 .replace(/\u00F3/g, 'o')
+                .replace(/\u00FA/g, 'u')
                 .replace(/\u00FA/g, 'u');
         } else{
             return '';
         }
+    }
+
+    function fixSIGAsBadAccents(string){
+        return decodeURIComponent(escape(string));
     }
 
     function makeShortName () {
