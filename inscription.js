@@ -23,12 +23,21 @@ var inscription = (function() {
         Ju: { m: true, t: true, n: true },
         Vi: { m: true, t: true, n: true },
         Sa: { m: true, t: true, n: true }  
-    }
+    };
+    inscription.availableHoursInDays = {
+        Lu: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
+        Ma: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
+        Mi: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
+        Ju: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
+        Vi: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
+        Sa: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] }
+    };
 
     inscription.generateAlternatives = function() {
         inscription.alternatives = [];
         var subjectsToProcess = inscription.subjects;
         var currentAlternative = [];
+        var currentAvailability = JSON.parse( JSON.stringify( inscription.availableHoursInDays ) ); // copy object
 
         function processNextSubject () {
             var currentSubject = subjectsToProcess.pop();
@@ -44,6 +53,7 @@ var inscription = (function() {
                 }
 
                 if(scheduleMeetsFilters(schedule)){
+                    markScheduleAsBusy(schedule);
                     currentAlternative.push({
                         subject: currentSubject, 
                         schedule: schedule
@@ -55,6 +65,7 @@ var inscription = (function() {
                         finalAlternative.schedules = currentAlternative.slice();
                         addPickedStatusFromStorage(finalAlternative);
                         inscription.alternatives.push(finalAlternative);
+                        currentAvailability = JSON.parse( JSON.stringify( inscription.availableHoursInDays ) );
                     }   
                     currentAlternative.pop();
                 }
@@ -65,28 +76,31 @@ var inscription = (function() {
 
         function scheduleMeetsFilters (schedule) {
             return schedule.active &&
-                scheduleIsUniqueInCurrentAlternative(schedule) && 
+                scheduleFitsAlternative(schedule) &&
                 scheduleIsInAvailableTurns(schedule) &&
                 scheduleIsInAvailableDays(schedule) &&
                 scheduleIsInAvailableTurnsInDays(schedule);
         }
 
-        function scheduleIsUniqueInCurrentAlternative (schedule) {
-
-            if (currentAlternative.length) {
-                var currentDays = getCurrentAlternativeDays();
-                for(var i = 0; i < currentDays.length; i++){
-                    var day = currentDays[i];
-                    for(var j = 0; j < schedule.days.length; j++){
-                        var scheduleDay = schedule.days[j];
-                        if(day.name === scheduleDay.name && day.turn === scheduleDay.turn ){
-                            return false;
-                        }
+        function scheduleFitsAlternative (schedule) {
+            for(var i = 0; i < schedule.days.length; i++){
+                var day = schedule.days[i];
+                for (var h = day.startHour; h < day.endHour + 1; h++){
+                    if (!currentAvailability[day.name][day.turn][h]) {
+                        return false;
                     }
                 }
             }
-
             return true;
+        }
+
+        function markScheduleAsBusy (schedule) {
+            for(var i = 0; i < schedule.days.length; i++){
+                var day = schedule.days[i];
+                for (var h = day.startHour; h < day.endHour + 1; h++){
+                    currentAvailability[day.name][day.turn][h] = false;
+                }
+            }
         }
 
         function getCurrentAlternativeDays () {
