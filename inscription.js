@@ -215,6 +215,16 @@ var inscription = (function() {
 
     inscription.loadFromStorage = function() {
         this.subjects = this.subjectsFromStorage() || [];
+        this.subjects.forEach(function(subject) {
+            subject.schedules.forEach(function(schedule) {
+               schedule.days.forEach(function(day) {
+                   if (day.startHour === undefined)
+                       day.startHour = 1;
+                   if (day.endHour === undefined)
+                       day.endHour = 5;
+               });
+           });
+        });
         this.pickedAlternatives = this.alternativesFromStorage() || [];
     };
 
