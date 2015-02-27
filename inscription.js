@@ -65,9 +65,9 @@ var inscription = (function() {
                         finalAlternative.schedules = currentAlternative.slice();
                         addPickedStatusFromStorage(finalAlternative);
                         inscription.alternatives.push(finalAlternative);
-                        currentAvailability = JSON.parse( JSON.stringify( inscription.availableHoursInDays ) );
                     }   
                     currentAlternative.pop();
+                    markScheduleAsAvailable(schedule);
                 }
             }
 
@@ -99,6 +99,15 @@ var inscription = (function() {
                 var day = schedule.days[i];
                 for (var h = day.startHour; h < day.endHour + 1; h++){
                     currentAvailability[day.name][day.turn][h] = false;
+                }
+            }
+        }
+
+        function markScheduleAsAvailable (schedule) {
+            for(var i = 0; i < schedule.days.length; i++){
+                var day = schedule.days[i];
+                for (var h = day.startHour; h < day.endHour + 1; h++){
+                    currentAvailability[day.name][day.turn][h] = true;
                 }
             }
         }

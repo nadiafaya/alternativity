@@ -35,7 +35,7 @@ var Subject = function (params) {
     function parseSchedulesText () {
         var lines = schedulesText.match(/.+/gm);
         if (!lines || !lines.length) {
-            logError("No se pudo encontrar ningún horario. Ingresá los horarios en el campo 'Horarios de materia'");
+            logEmptyTextError();
             return;
         } 
         for (var i = 0; i < lines.length; i++) {
@@ -47,22 +47,15 @@ var Subject = function (params) {
             }
             for (var j = 0; j < days.length; j++) {
                 var parsedDay = /(Lu|Ma|Mi|Ju|Vi|Sa)\s*\((m|t|n)\)(\d):(\d)/g.exec(days[j]);
-                if (!parsedDay || parsedDay.length < 5)
-                    continue;
-                var dayName = parsedDay[1];
-                var dayTurn = parsedDay[2];
-                var startHour = parseInt(parsedDay[3]);
-                var endHour = parseInt(parsedDay[4]);
-
-                if (!dayName || !dayName.length || !dayTurn || !dayTurn.length) {
-                    logError();
+                if (!parsedDay || parsedDay.length < 5) {
+                    logBadFormatError(days[j], lines[i]);
                     return;
                 }
                 var day = new Day({
-                    name: dayName,
-                    turn: dayTurn,
-                    startHour: startHour,
-                    endHour: endHour
+                    name: parsedDay[1],
+                    turn: parsedDay[2],
+                    startHour: parseInt(parsedDay[3], 10),
+                    endHour: parseInt(parsedDay[4], 10)
                 });
                 schedule.days.push(day);
             }
@@ -70,26 +63,24 @@ var Subject = function (params) {
         }
     }
 
-    function logError (message) {
-        subject.errorLog = message || "Hubo un error al leer los horarios. Ingresá los horarios con la forma 'Lu(n) 0:5'";
+    function logEmptyTextError () {
+        subject.errorLog = "No se pudo encontrar ningún horario. Ingresá los horarios en el campo 'Horarios de materia'";
+    }
+
+    function logBadFormatError (day, line) {
+        subject.errorLog = "Hubo un error al leer el día '"+ day +"' en la siguiente línea: '"+ line +"'. Ingresá los horarios con la forma 'Lu(n)0:5'";
     }
 
     function cleanAccents (text) {
         if (text) {
-            return fixSIGAsBadAccents(text)
-                .replace(/\u00E1/g, 'a')
+            return text.replace(/\u00E1/g, 'a')
                 .replace(/\u00E9/g, 'e')
                 .replace(/\u00ED/g, 'i')
                 .replace(/\u00F3/g, 'o')
-                .replace(/\u00FA/g, 'u')
                 .replace(/\u00FA/g, 'u');
         } else{
             return '';
         }
-    }
-
-    function fixSIGAsBadAccents(string){
-        return decodeURIComponent(escape(string));
     }
 
     function makeShortName () {
