@@ -135,7 +135,7 @@ var SubjectScheduleTableRow = function(table, schedule) {
 			var day = schedule.days[i];
 			var dayField = row.querySelector('td[class^="'+day.name+'"]');
 			dayField.classList.add('info');
-			dayField.innerText = day.turn;
+			dayField.innerText = day.turn + ' ' + day.startHour + ':' + day.endHour;
 		}
 	};
 

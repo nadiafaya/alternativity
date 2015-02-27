@@ -13,6 +13,8 @@ var subjectColors = {
 var Day = function (params) {
     this.name = params.name || ''; // Lu,Ma,Mi,Ju,Vi,Sá
     this.turn = params.turn || ''; // m, t, n
+    this.startHour = params.startHour || 1;
+    this.endHour = params.endHour || 5;
 };
 
 var Schedule = function () {
@@ -38,21 +40,29 @@ var Subject = function (params) {
         } 
         for (var i = 0; i < lines.length; i++) {
             var schedule = new Schedule();
-            var parsedDays = lines[i].match(/(Lu|Ma|Mi|Ju|Vi|Sa)\s*\((m|t|n)\)/g); // Lu(m)
-            if (!parsedDays || !parsedDays.length) {
+            var days = lines[i].split(' ');
+            if (!days || !days.length) {
                 logError();
                 return;
             }
-            for (var j = 0; j < parsedDays.length; j++) {
-                var dayName = parsedDays[j].match(/Lu|Ma|Mi|Ju|Vi|Sa/g);
-                var dayTurn = parsedDays[j].match(/m|t|n/g);
+            for (var j = 0; j < days.length; j++) {
+                var parsedDay = /(Lu|Ma|Mi|Ju|Vi|Sa)\s*\((m|t|n)\)(\d):(\d)/g.exec(days[j]);
+                if (!parsedDay || parsedDay.length < 5)
+                    continue;
+                var dayName = parsedDay[1];
+                var dayTurn = parsedDay[2];
+                var startHour = parseInt(parsedDay[3]);
+                var endHour = parseInt(parsedDay[4]);
+
                 if (!dayName || !dayName.length || !dayTurn || !dayTurn.length) {
                     logError();
                     return;
-                };
+                }
                 var day = new Day({
-                    name: dayName[0],
-                    turn: dayTurn[0]
+                    name: dayName,
+                    turn: dayTurn,
+                    startHour: startHour,
+                    endHour: endHour
                 });
                 schedule.days.push(day);
             }
@@ -66,14 +76,20 @@ var Subject = function (params) {
 
     function cleanAccents (text) {
         if (text) {
-            return text.replace(/\u00E1/g, 'a')
+            return fixSIGAsBadAccents(text)
+                .replace(/\u00E1/g, 'a')
                 .replace(/\u00E9/g, 'e')
                 .replace(/\u00ED/g, 'i')
                 .replace(/\u00F3/g, 'o')
+                .replace(/\u00FA/g, 'u')
                 .replace(/\u00FA/g, 'u');
         } else{
             return '';
         }
+    }
+
+    function fixSIGAsBadAccents(string){
+        return decodeURIComponent(escape(string));
     }
 
     function makeShortName () {
