@@ -53,7 +53,7 @@ var foundAlternativesController = (function() {
 
 	var toggleEmptyText = function(value) {
 		var emptyText = document.querySelector('#alternatives #noAlternatives') ;
-		emptyText.innerText = getEmptyText();
+		emptyText.textContent = getEmptyText();
         emptyText.style.display = value? 'block' : 'none';
 	};
 
@@ -94,7 +94,7 @@ var foundAlternativesController = (function() {
 
 	var updateBadgeCount = function() {
 		var badge = document.getElementById('alternativesBadge');
-		badge.innerText = inscription.alternatives.length;
+		badge.textContent = inscription.alternatives.length;
 		badge.className = inscription.alternatives.length? 'badge' : 'hidden';
 	};
 
@@ -144,7 +144,7 @@ var AlternativeView = function(alternative, index) {
 
 	var addTitle = function() {
 		var alternativeTitle = viewHtml.querySelector('h4');
-		alternativeTitle.innerText = 'Alternativa ' + (index + 1);
+		alternativeTitle.textContent = 'Alternativa ' + (index + 1);
 	};
 
 	var paintAlternativeDays = function() {

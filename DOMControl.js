@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		// Clear errors
 		subjectName.classList.remove('hasError');
 		subjectSchedules.classList.remove('hasError');
-		errorMessages.innerText = '';
+		errorMessages.textContent = '';
 
 		// Validate empty fields
 		if (!subjectName.value) {
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		// Check for errors
 		if (newSubject.errorLog) {
 			subjectSchedules.classList.add('hasError');
-			errorMessages.innerText = newSubject.errorLog;
+			errorMessages.textContent = newSubject.errorLog;
 			return;
 		};
 
@@ -150,8 +150,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		toggleFilter('advancedFilters');
 		// Switch button text
 		var button = switchGlobalAndAdvancedFiltersButton;
-		var oldText = button.innerText;
-		button.innerText = button.dataset.backuptext;
+		var oldText = button.textContent;
+		button.textContent = button.dataset.backuptext;
 		button.dataset.backuptext = oldText;
 	});
 
@@ -182,11 +182,11 @@ document.addEventListener("DOMContentLoaded", function(){
 		var isActive = showOnlyPickedButton.classList.contains('active');
 		if (isActive) {
 			showOnlyPickedButton.classList.remove('active');
-			showOnlyPickedButton.innerText = "Mostrar solo las elegidas";
+			showOnlyPickedButton.textContent = "Mostrar solo las elegidas";
 			foundAlternativesController.showAllAlternatives();
 		} else {
 			showOnlyPickedButton.classList.add('active');
-			showOnlyPickedButton.innerText = "Mostrar todas";
+			showOnlyPickedButton.textContent = "Mostrar todas";
 			foundAlternativesController.showOnlyPickedAlternatives();
 		}
 	});

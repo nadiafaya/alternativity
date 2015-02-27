@@ -66,7 +66,7 @@ var SubjectScheduleTable = function(foundSubject) {
 
 	var addSubjectName = function() {
 		var subjectTitle = 	table.querySelector('.subjectTitle');
-		subjectTitle.innerText = subject.name;
+		subjectTitle.textContent = subject.name;
 	};
 
 	var attachOnOffOptionalEvents = function() {
@@ -135,7 +135,7 @@ var SubjectScheduleTableRow = function(table, schedule) {
 			var day = schedule.days[i];
 			var dayField = row.querySelector('td[class^="'+day.name+'"]');
 			dayField.classList.add('info');
-			dayField.innerText = day.turn + ' ' + day.startHour + ':' + day.endHour;
+			dayField.textContent = day.turn + ' ' + day.startHour + ':' + day.endHour;
 		}
 	};
 
@@ -174,9 +174,9 @@ var SubjectListItem = function(foundSubject) {
 		listItem.id = foundSubject.subject.name.replace(/\s/g, '');
 		listItem.classList.add('list-group-item');
 		listItem.setAttribute('href', 'javascript: void(0)');
-		listItem.innerText = foundSubject.subject.name;
+		listItem.textContent = foundSubject.subject.name;
 		var optionalText = document.createElement('span')
-		optionalText.innerText = '(opcional)';
+		optionalText.textContent = '(opcional)';
 		optionalText.className = 'optionalText';
 		listItem.appendChild(optionalText);
 		optionalText.style.display = foundSubject.subject.isOptional? 'inline-block' : 'none';
@@ -191,7 +191,7 @@ var SubjectListItem = function(foundSubject) {
 	var createRemoveButton = function() {
 		var removeButton = document.createElement('span');
 		removeButton.classList.add('removeSubjectButton');
-		removeButton.innerText = 'x';
+		removeButton.textContent = 'x';
 		listItem.appendChild(removeButton);
 		removeButton.addEventListener('click', onRemoveButtonClicked);
 	};
@@ -231,7 +231,7 @@ var SubjectListItem = function(foundSubject) {
 		if (!remainingSubjectListItems.length) {
 			var emptyText = document.createElement('div');
 			emptyText.classList.add('empty-text');
-			emptyText.innerText = 'No hay materias';
+			emptyText.textContent = 'No hay materias';
 			subjectItemList.appendChild(emptyText);
 		}
 		foundSubjectsController.removeFromList(foundSubject);
