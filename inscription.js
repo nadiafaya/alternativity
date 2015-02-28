@@ -24,20 +24,12 @@ var inscription = (function() {
         Vi: { m: true, t: true, n: true },
         Sa: { m: true, t: true, n: true }  
     };
-    inscription.availableHoursInDays = {
-        Lu: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
-        Ma: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
-        Mi: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
-        Ju: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
-        Vi: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] },
-        Sa: { m: [true, true, true, true, true, true, true], t: [true, true, true, true, true, true, true], n: [true, true, true, true, true, true] }
-    };
-
+    
     inscription.generateAlternatives = function() {
         inscription.alternatives = [];
         var subjectsToProcess = inscription.subjects;
         var currentAlternative = [];
-        var currentAvailability = JSON.parse( JSON.stringify( inscription.availableHoursInDays ) ); // copy object
+        var currentAvailability = getAvailableHoursInDays();
 
         function processNextSubject () {
             var currentSubject = subjectsToProcess.pop();
@@ -180,6 +172,24 @@ var inscription = (function() {
             processNextSubject();
         }
     };
+
+    function getAvailableHoursInDays () {
+    	var hoursInDay = function() {
+    		return { 
+    			m: [true, true, true, true, true, true, true],
+    			t: [true, true, true, true, true, true, true],
+    			n: [true, true, true, true, true, true]
+    		};
+    	};
+    	return {
+	        Lu: hoursInDay(),
+	        Ma: hoursInDay(),
+	        Mi: hoursInDay(),
+	        Ju: hoursInDay(),
+	        Vi: hoursInDay(),
+	        Sa: hoursInDay()
+	    };
+    }
 
     function findStoragePickedAlternative (alternative) {
         if (inscription.pickedAlternatives) {
