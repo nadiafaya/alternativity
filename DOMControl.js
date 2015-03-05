@@ -202,6 +202,21 @@ document.addEventListener("DOMContentLoaded", function(){
 		inscription.generateAlternatives();
 		foundAlternativesController.generateDOM();			
 	}
+
+	// Load missing updates
+	if (updates.missing.length) {
+		var alert = document.querySelector('.alert');
+		var alertTextContainer = document.querySelector('.alert .update-container');
+		var alertCloseButton = document.querySelector('.alert .close');
+		alertCloseButton.addEventListener('click', function() {
+			alert.style.display = 'none';
+			updates.saveMissingUpdates();
+		});
+		updates.missing.forEach(function(update) {
+			alertTextContainer.innerHTML = update.html;
+		});
+		alert.style.display = 'block';
+	}
 });
 
 var onOff = (function() {

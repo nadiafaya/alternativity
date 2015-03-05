@@ -154,7 +154,7 @@ var AlternativeView = function(alternative, index) {
 				var day = alternativeSubject.schedule.days[j];
 				var dayField = viewHtml.querySelector('tr[rel="'+day.turn+'"] td.'+day.name);
 				dayField.style.backgroundColor = alternativeSubject.subject.color;
-				dayField.textContent = alternativeSubject.subject.shortName;
+				dayField.innerHTML += alternativeSubject.subject.name + ' ' + day.startHour + ':' + day.endHour + '<br>';
 				dayField.title = alternativeSubject.subject.name;
 			}
 		}
@@ -186,7 +186,7 @@ var AlternativeView = function(alternative, index) {
 			numbers.splice(numbers.indexOf(starNumber),1);
 			for (var i = 0; i < numbers.length; i++) {
 				alternativeView.unpickStar(numbers[i]);
-			};
+			}
 			pickStar(starNumber);
 		}
 	};

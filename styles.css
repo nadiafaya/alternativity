@@ -103,6 +103,51 @@ body {
     display: block;
 }
 
+.alert {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 25%;
+    background-color: #FF851B;
+    color: #FFF;
+    padding: 15px;
+    padding-right: 35px;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-width: 0 1px 4px 1px;
+    border-color: #FF7701;
+    border-radius: 4px;
+}
+
+.alert .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0);
+    color: inherit;
+    border: 0;
+    -webkit-appearance: none;
+    text-decoration: none;
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #FFF;
+}
+
+.alert h4 {
+    color: #FFF;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.alert p {
+    color: #FFF;
+    font-size: 16px;
+}
+
 h1 {
     font-weight: normal;
     font-size: 36px;

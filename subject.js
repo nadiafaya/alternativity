@@ -13,6 +13,8 @@ var subjectColors = {
 var Day = function (params) {
     this.name = params.name || ''; // Lu,Ma,Mi,Ju,Vi,Sá
     this.turn = params.turn || ''; // m, t, n
+    this.startHour = params.startHour || 1;
+    this.endHour = params.endHour || 5;
 };
 
 var Schedule = function () {
@@ -33,26 +35,27 @@ var Subject = function (params) {
     function parseSchedulesText () {
         var lines = schedulesText.match(/.+/gm);
         if (!lines || !lines.length) {
-            logError("No se pudo encontrar ningún horario. Ingresá los horarios en el campo 'Horarios de materia'");
+            logEmptyTextError();
             return;
         } 
         for (var i = 0; i < lines.length; i++) {
             var schedule = new Schedule();
-            var parsedDays = lines[i].match(/(Lu|Ma|Mi|Ju|Vi|Sa)\s*\((m|t|n)\)/g); // Lu(m)
-            if (!parsedDays || !parsedDays.length) {
+            var days = lines[i].split(' ');
+            if (!days || !days.length) {
                 logError();
                 return;
             }
-            for (var j = 0; j < parsedDays.length; j++) {
-                var dayName = parsedDays[j].match(/Lu|Ma|Mi|Ju|Vi|Sa/g);
-                var dayTurn = parsedDays[j].match(/m|t|n/g);
-                if (!dayName || !dayName.length || !dayTurn || !dayTurn.length) {
-                    logError();
+            for (var j = 0; j < days.length; j++) {
+                var parsedDay = /(Lu|Ma|Mi|Ju|Vi|Sa)\s*\((m|t|n)\)(\d):(\d)/g.exec(days[j]);
+                if (!parsedDay || parsedDay.length < 5) {
+                    logBadFormatError(days[j], lines[i]);
                     return;
-                };
+                }
                 var day = new Day({
-                    name: dayName[0],
-                    turn: dayTurn[0]
+                    name: parsedDay[1],
+                    turn: parsedDay[2],
+                    startHour: parseInt(parsedDay[3], 10),
+                    endHour: parseInt(parsedDay[4], 10)
                 });
                 schedule.days.push(day);
             }
@@ -60,8 +63,12 @@ var Subject = function (params) {
         }
     }
 
-    function logError (message) {
-        subject.errorLog = message || "Hubo un error al leer los horarios. Ingresá los horarios con la forma 'Lu(n) 0:5'";
+    function logEmptyTextError () {
+        subject.errorLog = "No se pudo encontrar ningún horario. Ingresá los horarios en el campo 'Horarios de materia'";
+    }
+
+    function logBadFormatError (day, line) {
+        subject.errorLog = "Hubo un error al leer el día '"+ day +"' en la siguiente línea: '"+ line +"'. Ingresá los horarios con la forma 'Lu(n)0:5'";
     }
 
     function cleanAccents (text) {
