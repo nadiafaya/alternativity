@@ -1,4 +1,5 @@
 Gruntfile.js
+prepros.cfg
 node_modules/
 package.json
 specs/
