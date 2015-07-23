@@ -1,0 +1,25 @@
+
+
+
+.navigation.affix {
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+}
+
+.thumbnail .caption {
+  text-align: left
+}
+
+.thumbnail {
+  text-align: center
+}
+
+.section-title {
+  padding-top: 80px;
+  margin-top: -40px;
+}
+
+.list-group > a{
+  margin-bottom: 20px;
+}
