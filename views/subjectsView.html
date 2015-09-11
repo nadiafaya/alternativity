@@ -1,3 +1,73 @@
 <div class="container">
   <h2 class="section-header">Materias</h2>
+  <div class="subjects row">
+    <div class="subjectList col-md-4">
+      <div class="panel panel-default">
+        <div class="list-group">
+          <a ng-click="showSubjectDetail(subject)" ng-repeat="subject in subjects" ng-class="['list-group-item', { active: subject.name == selectedSubject.name }]" href="javascript:void(0)">
+            {{subject.name}}
+            <span ng-if="subject.isOptional">(opcional)</span>
+          </a>
+          <div ng-if="!subjects" class="empty-text text-center">No hay materias</div>
+        </div>
+      </div>
+      <button type="button" data-toggle="modal" data-target=".add-subject-modal" class="btn btn-default btn-block triggerModal" data-modal="#addSubjectForm">Agregar materia</button>
+    </div>
+    <div class="subjectView col-md-7 well">
+      <div ng-if="selectedSubject" class="viewSchedule">
+        <div class="row">
+          <h4 class="col-md-10">Horarios de {{selectedSubject.name}}</h4>
+          <h5 class="col-md-1">
+            <a href="javascript:void(0)">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+          </h5>
+          <h5 class="col-md-1">
+            <a href="javascript:void(0)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
+          </h5>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Mi&eacute;rcoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+              <th>S&aacute;bado</th>
+              <th>Horario habilitado <span class="glyphicon glyphicon-info-sign schedule-enable-info" data-toggle="tooltip" title="Al deshabilitar un horario, este se ignora para calcular las alternativas"></span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="schedule in selectedSubject.schedules" class="subjectSchedulesView">
+              <td class="n">{{$index + 1}}</td>
+              <td class="{{scheduleHasDay(schedule, 'Lu')? 'bg-primary' : ''}}">{{getScheduleDayDetailText(schedule, 'Lu')}}</td>
+              <td class="{{scheduleHasDay(schedule, 'Ma')? 'bg-primary' : ''}}">{{getScheduleDayDetailText(schedule, 'Ma')}}</td>
+              <td class="{{scheduleHasDay(schedule, 'Mi')? 'bg-primary' : ''}}">{{getScheduleDayDetailText(schedule, 'Mi')}}</td>
+              <td class="{{scheduleHasDay(schedule, 'Ju')? 'bg-primary' : ''}}">{{getScheduleDayDetailText(schedule, 'Ju')}}</td>
+              <td class="{{scheduleHasDay(schedule, 'Vi')? 'bg-primary' : ''}}">{{getScheduleDayDetailText(schedule, 'Vi')}}</td>
+              <td class="{{scheduleHasDay(schedule, 'Sa')? 'bg-primary' : ''}}">{{getScheduleDayDetailText(schedule, 'Sa')}}</td>
+              <td class="activatedSchedule text-center">
+                <input type="checkbox" ng-model="schedule.active" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="optionalSubject row">
+          <strong class="col-md-4">
+            <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Las materias opcionales son opcionales a la hora de calcular las alternativas. Si una materia es obligatoria, toda alternativa deberá contener si o si a esa materia"></span>
+            Materia opcional
+          </strong>
+          <input id="optionalSubjectOnOff" class="col-md-6" type="checkbox" ng-model="selectedSubject.isOptional" />
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="add-subject-modal"></div>
+<script type="text/javascript">
+  $('.glyphicon-info-sign').tooltip();
+</script>

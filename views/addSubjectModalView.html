@@ -1,0 +1,49 @@
+<div class="modal fade" id="add-subject-modal" tabindex="-1" role="dialog" aria-labelledby="addSubjectLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addSubjectLabel">Agregar Materia</h4>
+      </div>
+      <div class="modal-body">
+        <form name="subjectForm" class="form-horizontal">
+          <fieldset>
+            <div ng-class="['form-group', {'has-error': subjectForm.nameInput.$touched && (subjectForm.nameInput.$error.required || subjectForm.nameInput.$error.subjectNameIsUnique)}]">
+              <label for="nameInput" class="col-lg-2 control-label">Nombre</label>
+              <div class="col-lg-10">
+                <input type="text" ng-model="subject.name" ng-model-options="{ updateOn: 'blur' }" class="form-control" id="nameInput" name="nameInput" required subject-name-is-unique>
+                <span class="text-danger" ng-if="subjectForm.nameInput.$touched && subjectForm.nameInput.$error.subjectNameIsUnique">Ya existe una materia con el mismo nombre</span>
+                <span class="text-danger" ng-if="subjectForm.nameInput.$touched && subjectForm.nameInput.$error.required">El nombre de la materia es obligatorio</span>
+              </div>
+            </div>
+            <div ng-class="['form-group', {'has-error': subjectForm.scheduleInput.$touched && (subjectForm.scheduleInput.$error.required || subjectForm.scheduleInput.$error.schedulesAreValid)}]">
+              <label for="schedules" class="col-lg-2 control-label">Horarios</label>
+              <div class="col-lg-10">
+                <textarea ng-model="subject.scheduleText" id="schedules" class="form-control" name="scheduleInput" rows="3" required schedules-are-valid></textarea>
+                <span class="text-danger" ng-if="subjectForm.scheduleInput.$touched && subjectForm.scheduleInput.$error.schedulesAreValid">
+                  Los horarios no se ingresaron correctamente. Por favor utilize el siguiente formato:
+                  <br>
+                  K4011    Lu(m)1:5 Ju(m)1:5                                                                                       
+                </span>
+                <span class="text-danger" ng-if="subjectForm.scheduleInput.$touched && subjectForm.scheduleInput.$error.required">Los horarios de la materia son obligatorios</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-offset-2 col-sm-10">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Materia Opcional
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button ng-click="cancel()" type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
+        <button ng-click="addSubject()" type="button" class="btn btn-primary">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
