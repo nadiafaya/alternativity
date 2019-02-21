@@ -31,7 +31,7 @@ Site to help UTN students put together their schedules for the university inscri
 
     if v > 3
 
-        -m http.server
+        python -m http.server
 
 6. Open browser
 
