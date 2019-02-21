@@ -191,6 +191,21 @@ document.addEventListener("DOMContentLoaded", function(){
 		}
 	});
 
+  // Show full info
+  var showFullInfoButton = document.querySelector('.alternatives #showFullInfo');
+  showFullInfoButton.addEventListener('click', function() {
+    var isActive = showFullInfoButton.classList.contains('active');
+    if (isActive) {
+      showFullInfoButton.classList.remove('active');
+      showFullInfoButton.textContent = "Ver materias extendidas";
+      foundAlternativesController.showCompactInfo();
+    } else {
+      showFullInfoButton.classList.add('active');
+      showFullInfoButton.textContent = "Ver materias compactadas";
+      foundAlternativesController.showFullInfo();
+    }
+  });
+
 	// Load the subjects stored on local storage
 	if(inscription.isPersisted()) {
 		inscription.loadFromStorage();

@@ -20,6 +20,16 @@ var Day = function (params) {
 var Schedule = function () {
     this.days = [];
     this.active = true;
+    this.code = '';
+    this.building = '';
+};
+
+var regExps = {
+  day: "(Lu|Ma|Mi|Ju|Vi|Sa)",
+  code: "(.*)",
+  turn: "\\((m|t|n)\\)",
+  hour: "(\\d)",
+  building: "(MEDRANO|CAMPUS)"
 };
 
 var Subject = function (params) {
@@ -40,25 +50,43 @@ var Subject = function (params) {
         } 
         for (var i = 0; i < lines.length; i++) {
             var schedule = new Schedule();
-            var days = lines[i].split(' ');
-            if (!days || !days.length) {
+            var scheduleRegexp = new RegExp(
+                regExps.code + "?\\s*" +
+                regExps.day + "\\s*" +
+                regExps.turn +
+                regExps.hour + ":" + regExps.hour +
+                "\\s*(" +
+                regExps.day + "\\s*" +
+                regExps.turn +
+                regExps.hour + ":" + regExps.hour +
+                ")?" +
+                "\\s*(" +
+                regExps.building +
+                ")?"
+            );
+            var parsedText = scheduleRegexp.exec(lines[i]);
+            if (!parsedText || !parsedText.length || parsedText.length < 5) {
                 logError();
                 return;
             }
-            for (var j = 0; j < days.length; j++) {
-                var parsedDay = /(Lu|Ma|Mi|Ju|Vi|Sa)\s*\((m|t|n)\)(\d):(\d)/g.exec(days[j]);
-                if (!parsedDay || parsedDay.length < 5) {
-                    logBadFormatError(days[j], lines[i]);
-                    return;
-                }
-                var day = new Day({
-                    name: parsedDay[1],
-                    turn: parsedDay[2],
-                    startHour: parseInt(parsedDay[3], 10),
-                    endHour: parseInt(parsedDay[4], 10)
+            schedule.code = (parsedText[1] && parsedText[1].trim()) || "";
+            var day = new Day({
+                name: parsedText[2],
+                turn: parsedText[3],
+                startHour: parseInt(parsedText[4], 10),
+                endHour: parseInt(parsedText[5], 10)
+            });
+            schedule.days.push(day);
+            if (parsedText[7] && parsedText[8] && parsedText[9] && parsedText[10]) {
+                var day2 = new Day({
+                    name: parsedText[7],
+                    turn: parsedText[8],
+                    startHour: parseInt(parsedText[9], 10),
+                    endHour: parseInt(parsedText[10], 10)
                 });
-                schedule.days.push(day);
+                schedule.days.push(day2);
             }
+            schedule.building = (parsedText[11] && parsedText[11].trim()) || "";
             subject.schedules.push(schedule);
         }
     }
