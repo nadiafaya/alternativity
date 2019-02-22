@@ -1,7 +1,9 @@
 var foundAlternativesController = (function() {
 	var foundAlternativesController = {};
 	var alternativeViewList = [];
-	var pickedAlternativesButtonOn = false;
+  var pickedAlternativesButtonOn = false;
+	
+  foundAlternativesController.fullInfoButtonOn = false;
 
 	foundAlternativesController.generateDOM = function() {
 		cleanAlternativeViews();
@@ -35,6 +37,16 @@ var foundAlternativesController = (function() {
 		};
 		toggleEmptyText(false);
 	};
+
+  foundAlternativesController.showFullInfo = function() {
+    foundAlternativesController.fullInfoButtonOn = true;
+    foundAlternativesController.generateDOM();
+  };
+
+  foundAlternativesController.showCompactInfo = function() {
+    foundAlternativesController.fullInfoButtonOn = false;
+    foundAlternativesController.generateDOM();
+  };
 
 	var cleanAlternativeViews = function() {
 		var alternativesViews = document.querySelectorAll('.alternativesViews .alternative');
@@ -154,7 +166,15 @@ var AlternativeView = function(alternative, index) {
 				var day = alternativeSubject.schedule.days[j];
 				var dayField = viewHtml.querySelector('tr[rel="'+day.turn+'"] td.'+day.name);
 				dayField.style.backgroundColor = alternativeSubject.subject.color;
-				dayField.innerHTML += alternativeSubject.subject.name + ' ' + day.startHour + ':' + day.endHour + '<br>';
+				if (foundAlternativesController.fullInfoButtonOn) {
+          dayField.innerHTML +=
+            "<div class='line'>" + day.startHour + ':' + day.endHour + "</div>" +
+            "<div class='line'>" + alternativeSubject.subject.name + "</div>" +
+            (alternativeSubject.schedule.code ? ("<div class='line'>" + alternativeSubject.schedule.code + "</div>") : "") +
+            (alternativeSubject.schedule.building ? ("<div class='line'>" + alternativeSubject.schedule.building + "</div>") : "");
+        } else {
+          dayField.innerHTML += alternativeSubject.subject.name + ' ' + day.startHour + ':' + day.endHour + '<br>';
+        }
 				dayField.title = alternativeSubject.subject.name;
 			}
 		}
