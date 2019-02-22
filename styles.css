@@ -573,6 +573,10 @@ a.list-group-item.active:hover .optionalText {
     border-bottom: 2px solid #DDD;
 }
 
+.alternativesViewing button {
+    margin-left: 15px;
+}
+
 .removeSubjectButton {
     float: right;
     font-weight: bold;
@@ -619,6 +623,12 @@ a.list-group-item.active:hover .optionalText {
 
 .alternative td.day {
     color: #FFF;
+    padding: 5px;
+}
+
+.alternative td.day .line {
+    color: #FFF;
+    max-width: 120px;
 }
 
 .alternative table {
