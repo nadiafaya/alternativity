@@ -32,6 +32,30 @@ var regExps = {
   building: "(MEDRANO|CAMPUS)"
 };
 
+var oneDayScheduleRegexp = new RegExp(
+    regExps.code + "?\\s*" +
+    regExps.day + "\\s*" +
+    regExps.turn +
+    regExps.hour + ":" + regExps.hour +
+    "\\s*(" +
+    regExps.building +
+    ")?"
+);
+
+var twoDayScheduleRegexp = new RegExp(
+    regExps.code + "?\\s*" +
+    regExps.day + "\\s*" +
+    regExps.turn +
+    regExps.hour + ":" + regExps.hour +
+    "\\s*" +
+    regExps.day + "\\s*" +
+    regExps.turn +
+    regExps.hour + ":" + regExps.hour +
+    "\\s*(" +
+    regExps.building +
+    ")?"
+);
+
 var Subject = function (params) {
     var subject = {}; 
     var schedulesText = cleanAccents(params.schedules); // Esto es por "Sábado"
@@ -49,26 +73,23 @@ var Subject = function (params) {
             return;
         } 
         for (var i = 0; i < lines.length; i++) {
+            var lineText = lines[i];
             var schedule = new Schedule();
-            var scheduleRegexp = new RegExp(
-                regExps.code + "?\\s*" +
-                regExps.day + "\\s*" +
-                regExps.turn +
-                regExps.hour + ":" + regExps.hour +
-                "\\s*(" +
-                regExps.day + "\\s*" +
-                regExps.turn +
-                regExps.hour + ":" + regExps.hour +
-                ")?" +
-                "\\s*(" +
-                regExps.building +
-                ")?"
-            );
-            var parsedText = scheduleRegexp.exec(lines[i]);
-            if (!parsedText || !parsedText.length || parsedText.length < 5) {
-                logError();
+            var parsedText, parsedBuilding;
+            
+            if (twoDayScheduleRegexp.test(lineText)) {
+                parsedText = twoDayScheduleRegexp.exec(lineText);
+                parsedBuilding = parsedText[10];                
+
+            } else if (oneDayScheduleRegexp.test(lineText)) {
+                parsedText = oneDayScheduleRegexp.exec(lineText);
+                parsedBuilding = parsedText[6];
+            } else {
+                // no match
+                logBadFormatError();
                 return;
             }
+
             schedule.code = (parsedText[1] && parsedText[1].trim()) || "";
             var day = new Day({
                 name: parsedText[2],
@@ -77,16 +98,16 @@ var Subject = function (params) {
                 endHour: parseInt(parsedText[5], 10)
             });
             schedule.days.push(day);
-            if (parsedText[7] && parsedText[8] && parsedText[9] && parsedText[10]) {
+            if (parsedText[6] && parsedText[7] && parsedText[8] && parsedText[9]) {
                 var day2 = new Day({
-                    name: parsedText[7],
-                    turn: parsedText[8],
-                    startHour: parseInt(parsedText[9], 10),
-                    endHour: parseInt(parsedText[10], 10)
+                    name: parsedText[6],
+                    turn: parsedText[7],
+                    startHour: parseInt(parsedText[8], 10),
+                    endHour: parseInt(parsedText[9], 10)
                 });
                 schedule.days.push(day2);
             }
-            schedule.building = (parsedText[11] && parsedText[11].trim()) || "";
+            schedule.building = (parsedBuilding && parsedBuilding.trim()) || "";
             subject.schedules.push(schedule);
         }
     }
