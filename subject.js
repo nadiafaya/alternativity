@@ -13,8 +13,8 @@ var subjectColors = {
 var Day = function (params) {
     this.name = params.name || ''; // Lu,Ma,Mi,Ju,Vi,Sá
     this.turn = params.turn || ''; // m, t, n
-    this.startHour = params.startHour || 1;
-    this.endHour = params.endHour || 5;
+    this.startHour = params.startHour || 0;
+    this.endHour = params.endHour || 0;
 };
 
 var Schedule = function () {
